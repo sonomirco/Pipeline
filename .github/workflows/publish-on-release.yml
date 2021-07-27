@@ -7,6 +7,7 @@ on:
 env:
   PROJECT_PATH: 'Pipeline.csproj'
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  TAG_NAME: ${{ github.event.release.tag_name }}
 
 jobs:
   # This workflow contains a single job called "build"
@@ -32,18 +33,17 @@ jobs:
           echo "${{ github.event.release.tag_name }}"
           echo "${{ github.ref }}"
           echo "NUGET_VERSION=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
-          echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
-          echo "TAGNAME=${{github.event.release.tag_name}}" >> $GITHUB_ENV
+          echo "TAG=${github.event.release.tag_name}" >> $GITHUB_ENV
           echo "NUGET_VERSION: ${{ env.NUGET_VERSION }}"
           echo "TAG: ${{ env.TAG }}"
-          echo "TAG: ${{ env.TAGNAME }}"
+          echo "TAG_NAME: ${{ env.TAG_NAME }}"
 
       - name: 🧱 Build project
         run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:PackageVersion=${{ github.event.release.tag_name }} -p:Version=${{ github.event.release.tag_name }}
 
       # create symbols package https://docs.microsoft.com/en-us/nuget/create-packages/symbol-packages-snupkg
       - name: 📦 Create the package
-        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release -p:PackageVersion=${{ env.NUGET_VERSION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release -p:PackageVersion=${{ github.event.release.tag_name }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
         
       - name: 📑 Dotnet NuGet Add Source
         run: dotnet nuget add source --username sonomirco --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/sonomirco/index.json"
