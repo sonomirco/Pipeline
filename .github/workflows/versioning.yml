@@ -50,4 +50,4 @@ jobs:
         run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.gitversion.outputs.semVer }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
     
       - name: 🚀 Publish the package
-        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --skip-duplicate -k ${{ GITHUB_TOKEN }}
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --skip-duplicate -k ${GITHUB_TOKEN}
