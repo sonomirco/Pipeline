@@ -6,11 +6,10 @@
     <PackageTitle>Pipeline</PackageTitle>
     <PackageProjectUrl>https://sonomirco/Pipeline/</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <LangVersion>8</LangVersion>
-    <PackageVersion>$(PackageVersion)</PackageVersion>
     <Version>$(Version)</Version>
     <PackageId>Pipeline.PackageId</PackageId>
     <PackageDescription>A repo for testing a release pipeline.</PackageDescription>
+    <Summary>The Elements library provides object types for generating the built environment.</Summary>
     <RepositoryUrl>https://github.com/sonomirco/Pipeline</RepositoryUrl>
   </PropertyGroup>
 
