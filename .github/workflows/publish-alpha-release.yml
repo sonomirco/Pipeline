@@ -1,6 +1,9 @@
 name: Tag and Publish Alpha
 
-on: [push]
+on:
+  push:
+    branches:
+      - develop
 
 jobs:
   # This workflow contains a single job called "build"
