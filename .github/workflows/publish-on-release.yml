@@ -26,13 +26,16 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
-      - name: Set env
-        run: |
-          echo "${{ github.event.release.tag_name }}"
-          echo "${{ github.ref }}"
-          echo "NUGET_VERSION=$(echo ${github.ref:10})" >> $GITHUB_ENV
-          echo "TAG=${github.ref/refs\/tags\//}" >> $GITHUB_ENV
-          echo "TAGNAME=${github.event.release.tag_name}" >> $GITHUB_ENV
-          echo "NUGET_VERSION: ${{ env.NUGET_VERSION }}"
-          echo "TAG: ${{ env.TAG }}"
-          echo "TAG: ${{ env.TAGNAME }}"
+
+      - name: 🧱 Build project
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:PackageVersion=${{ github.event.release.tag_name }} -p:Version=${{ github.event.release.tag_name }}
+
+      # create symbols package https://docs.microsoft.com/en-us/nuget/create-packages/symbol-packages-snupkg
+      - name: 📦 Create the package
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release -p:PackageVersion=${{ env.NUGET_VERSION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        
+      - name: 📑 Dotnet NuGet Add Source
+        run: dotnet nuget add source --username sonomirco --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/sonomirco/index.json"
+    
+      - name: 🚀 Publish the package
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
