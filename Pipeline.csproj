@@ -2,12 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Pipeline.AssemblyName</AssemblyName>
+    <PackageTitle>Pipeline</PackageTitle>
     <PackageProjectUrl>https://sonomirco/Pipeline/</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <LangVersion>8</LangVersion>
-    <PackageVersion>0.1.2</PackageVersion>
-    <Version>0.1.1</Version>
-    <PackageId>Pipeline</PackageId>
+    <PackageVersion>$(PackageVersion)</PackageVersion>
+    <Version>$(Version)</Version>
+    <PackageId>Pipeline.PackageId</PackageId>
     <PackageDescription>A repo for testing a release pipeline.</PackageDescription>
     <RepositoryUrl>https://github.com/sonomirco/Pipeline</RepositoryUrl>
   </PropertyGroup>
