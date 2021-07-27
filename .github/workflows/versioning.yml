@@ -2,6 +2,10 @@ name: Versioning
 
 on:
   [push]
+  
+env:
+  PROJECT_PATH: 'Pipeline.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
 
 jobs:
   # This workflow contains a single job called "build"
