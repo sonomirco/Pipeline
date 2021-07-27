@@ -18,4 +18,3 @@ jobs:
           dotnet-version: 3.1.x
       - name: Set env
         run: echo "NUGET_VERSION=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
-      - run: dotnet build -c release -p:Version=${{ env.NUGET_VERSION }}
