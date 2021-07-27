@@ -38,17 +38,3 @@ jobs:
           echo "PreReleaseTag: ${{ steps.gitversion.outputs.preReleaseTag }}"
           echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
           echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
-          
-      - name: 🧱 Build project
-        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:PackageVersion=${{ steps.gitversion.outputs.semVer }} -p:Version=${{ steps.gitversion.outputs.semVer }}
-
-      # create symbols package https://docs.microsoft.com/en-us/nuget/create-packages/symbol-packages-snupkg
-      # non
-      - name: 📦 Create the package
-        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.gitversion.outputs.semVer }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
-        
-      - name: 📑 Dotnet NuGet Add Source
-        run: dotnet nuget add source --username sonomirco --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/sonomirco/index.json"
-    
-      - name: 🚀 Publish the package
-        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
