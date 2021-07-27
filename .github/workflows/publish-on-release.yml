@@ -28,9 +28,11 @@ jobs:
           dotnet-version: 5.0.x
       - name: Set env
         run: |
-          echo "$GITHUB_REF"
+          echo "${{ github.event.release.tag_name }}"
           echo "${{ github.ref }}"
-          echo "NUGET_VERSION=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
-          echo "TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+          echo "NUGET_VERSION=$(echo ${github.ref:10})" >> $GITHUB_ENV
+          echo "TAG=${github.ref/refs\/tags\//}" >> $GITHUB_ENV
+          echo "TAGNAME=${github.event.release.tag_name}" >> $GITHUB_ENV
           echo "NUGET_VERSION: ${{ env.NUGET_VERSION }}"
           echo "TAG: ${{ env.TAG }}"
+          echo "TAG: ${{ env.TAGNAME }}"
