@@ -2,6 +2,12 @@ name: Versioning
 
 on:
   [push]
+  
+env:
+  PROJECT_PATH: 'Pipeline.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  GIT_SOURCE_URL: 'https://nuget.pkg.github.com/sonomirco/index.json'
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   # This workflow contains a single job called "build"
@@ -34,3 +40,14 @@ jobs:
           echo "PreReleaseTag: ${{ steps.gitversion.outputs.preReleaseTag }}"
           echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
           echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
+          
+      - name: 🧱 Build project
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:PackageVersion=${{ NUGET_VERSION }}
+
+      # create symbols package https://docs.microsoft.com/en-us/nuget/create-packages/symbol-packages-snupkg
+      # non
+      - name: 📦 Create the package
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ NUGET_VERSION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+    
+      - name: 🚀 Publish the package
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --skip-duplicate -k ${{ GITHUB_TOKEN }}
