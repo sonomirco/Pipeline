@@ -42,12 +42,12 @@ jobs:
           echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
           
       - name: 🧱 Build project
-        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:PackageVersion=${{ NUGET_VERSION }}
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:PackageVersion=${{ steps.gitversion.outputs.semVer }} -p:Version=${{ steps.gitversion.outputs.semVer }}
 
       # create symbols package https://docs.microsoft.com/en-us/nuget/create-packages/symbol-packages-snupkg
       # non
       - name: 📦 Create the package
-        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ NUGET_VERSION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ steps.gitversion.outputs.semVer }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
     
       - name: 🚀 Publish the package
         run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --skip-duplicate -k ${{ GITHUB_TOKEN }}
