@@ -33,3 +33,4 @@ jobs:
       - run: |
           echo "PreReleaseTag: ${{ steps.gitversion.outputs.preReleaseTag }}"
           echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
+          echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
