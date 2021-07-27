@@ -45,10 +45,3 @@ jobs:
                 }
       - name: Set NuGet version from alpha.
         run: echo "NUGET_VERSION=${{steps.bump-with-alpha.outputs.result}}" >> $GITHUB_ENV
-      - name: Build Elements
-        run: dotnet build -c release -p:Version=${{ env.NUGET_VERSION }}
-      - name: Create alpha tag.
-        uses: tvdias/github-tagger@v0.0.1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ steps.bump-with-alpha.outputs.result }}
