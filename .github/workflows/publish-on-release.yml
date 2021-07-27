@@ -9,23 +9,17 @@ env:
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
 
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: windows-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  increment-version:
+    runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: 🛎 Checkout repo
+      - name: Checkout repo.
         uses: actions/checkout@v2
-        with: 
+        with:
           fetch-depth: 0
-
-      - name: 🚧 Setup .NET Core
+      - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 3.1.x
       - name: Set env
         run: |
           echo "NUGET_VERSION=$(echo ${GITHUB_REF:10})" >> $GITHUB_ENV
