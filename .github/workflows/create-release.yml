@@ -1,7 +1,8 @@
-name: Publish release
+name: Create release
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
       - develop
 
@@ -10,6 +11,7 @@ env:
 
 jobs:
   build:
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
     runs-on: ubuntu-20.04
 
     steps:
@@ -45,12 +47,15 @@ jobs:
                   return newTag
                 }
                 else {
-                  const splitLast = incoming.match(/(.*\.)(\d*)/)
-                  console.log("splitLast: " + splitLast)
-                  const newTag =splitLast[1] + (parseInt(splitLast[2])+1)+'-alpha.0'
+                  const newTag =incoming +'-alpha.0'
                   console.log("New Tag: " + newTag)
                   return newTag
                 }
+                
+      - name: events props
+        run: |
+          echo "variables ${{ github.event.pull_request.title }}
+          echo "variables ${{ github.event.pull_request.body }}
       
       - name: 🔧 Restore nuget with dotnet
         run: dotnet restore ${{ env.PROJECT_PATH }}
@@ -66,5 +71,11 @@ jobs:
         with:
           tag_name: ${{ steps.bump-with-alpha.outputs.result }}
           release_name: ${{ steps.bump-with-alpha.outputs.result }}
+          body: |
+            ## Title
+            ${{ github.event.pull_request.title }}
+            
+            ## Body
+            ${{ github.event.pull_request.body }}
           draft: false
           prerelease: false

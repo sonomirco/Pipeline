@@ -6,7 +6,7 @@
 # See https://github.com/release-drafter/release-drafter
 name-template: '$RESOLVED_VERSION'
 tag-template: '$RESOLVED_VERSION'
-change-template: '- $TITLE by @$AUTHOR (#$NUMBER)'
+change-template: '- $TITLE $BODY by @$AUTHOR '
 no-changes-template: '- No changes'
 categories:
   - title: '📚 Documentation'
@@ -18,9 +18,9 @@ categories:
   - title: '🐛 Bug Fixes'
     labels:
       - 'bug'
-  - title: '🧰 Maintenance'
+  - title: '🧰 Refactor'
     labels:
-      - 'maintenance'
+      - 'refactor'
 version-resolver:
   major:
     labels:
@@ -31,12 +31,12 @@ version-resolver:
   patch:
     labels:
       - 'patch'
-  default: patch
+
 template: |
   ## What’s Changed
   $CHANGES
 
-  ## 👨🏼‍💻 Contributors
+  ### 🦈 Contributors
 
   $CONTRIBUTORS
 autolabeler:
@@ -46,7 +46,7 @@ autolabeler:
   - label: 'enhancement'
     files:
       - 'Source/**/*'
-  - label: 'maintenance'
+  - label: 'refactor'
     files:
 #if (GitHub)
       - '.github/**/*'
