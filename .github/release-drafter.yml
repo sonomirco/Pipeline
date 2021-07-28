@@ -6,7 +6,7 @@
 # See https://github.com/release-drafter/release-drafter
 name-template: '$RESOLVED_VERSION'
 tag-template: '$RESOLVED_VERSION'
-change-template: '- $TITLE $BODY by @$AUTHOR '
+change-template: '- $TITLE (#$NUMBER, @$AUTHOR) '
 no-changes-template: '- No changes'
 categories:
   - title: '📚 Documentation'
@@ -37,7 +37,6 @@ template: |
   $CHANGES
 
   ### 🦈 Contributors
-
   $CONTRIBUTORS
 autolabeler:
   - label: 'documentation'
