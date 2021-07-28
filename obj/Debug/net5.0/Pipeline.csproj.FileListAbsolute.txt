@@ -1,0 +1,12 @@
+D:\MyFolder\VerbNurbs\Pipeline\bin\Debug\net5.0\Pipeline.AssemblyName.deps.json
+D:\MyFolder\VerbNurbs\Pipeline\bin\Debug\net5.0\Pipeline.AssemblyName.dll
+D:\MyFolder\VerbNurbs\Pipeline\bin\Debug\net5.0\ref\Pipeline.AssemblyName.dll
+D:\MyFolder\VerbNurbs\Pipeline\bin\Debug\net5.0\Pipeline.AssemblyName.pdb
+D:\MyFolder\VerbNurbs\Pipeline\obj\Debug\net5.0\Pipeline.csproj.AssemblyReference.cache
+D:\MyFolder\VerbNurbs\Pipeline\obj\Debug\net5.0\Pipeline.GeneratedMSBuildEditorConfig.editorconfig
+D:\MyFolder\VerbNurbs\Pipeline\obj\Debug\net5.0\Pipeline.AssemblyInfoInputs.cache
+D:\MyFolder\VerbNurbs\Pipeline\obj\Debug\net5.0\Pipeline.AssemblyInfo.cs
+D:\MyFolder\VerbNurbs\Pipeline\obj\Debug\net5.0\Pipeline.csproj.CoreCompileInputs.cache
+D:\MyFolder\VerbNurbs\Pipeline\obj\Debug\net5.0\Pipeline.AssemblyName.dll
+D:\MyFolder\VerbNurbs\Pipeline\obj\Debug\net5.0\ref\Pipeline.AssemblyName.dll
+D:\MyFolder\VerbNurbs\Pipeline\obj\Debug\net5.0\Pipeline.AssemblyName.pdb

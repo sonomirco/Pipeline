@@ -8,7 +8,7 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "D:\\MyFolder\\VerbNurbs\\Pipeline\\Pipeline.csproj",
-        "projectName": "Pipeline",
+        "projectName": "Pipeline.PackageId",
         "projectPath": "D:\\MyFolder\\VerbNurbs\\Pipeline\\Pipeline.csproj",
         "packagesPath": "C:\\Users\\m.bianchini\\.nuget\\packages\\",
         "outputPath": "D:\\MyFolder\\VerbNurbs\\Pipeline\\obj\\",
