@@ -52,6 +52,9 @@ jobs:
                   return newTag
                 }
       
+      - name: 🔧 Restore nuget with dotnet
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+      
       - name: 🧱 Build project
         run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ steps.bump-with-alpha.outputs.result }}
 
