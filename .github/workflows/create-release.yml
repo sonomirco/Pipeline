@@ -51,11 +51,6 @@ jobs:
                   console.log("New Tag: " + newTag)
                   return newTag
                 }
-                
-      - name: events props
-        run: |
-          echo "variables ${{ github.event.pull_request.title }}
-          echo "variables ${{ github.event.pull_request.body }}
       
       - name: 🔧 Restore nuget with dotnet
         run: dotnet restore ${{ env.PROJECT_PATH }}
