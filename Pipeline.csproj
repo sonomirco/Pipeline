@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Pipeline</AssemblyName>
-    <PackageTitle>Pipeline</PackageTitle>
     <PackageProjectUrl>https://sonomirco/Pipeline</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <Version>$(Version)</Version>
