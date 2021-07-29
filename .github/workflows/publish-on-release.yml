@@ -2,7 +2,9 @@ name: Publish on Release
 
 on:
   release:
-    types: [published]
+    types:
+      - published
+  workflow_dispatch:
     
 env:
   PROJECT_PATH: 'Pipeline.csproj'
@@ -67,7 +69,7 @@ jobs:
       - name: 💾 Download Artefact
         uses: actions/download-artifact@v1
         with:
-          name: 'GShark-packages'
+          name: 'Pipeline-packages'
           
       - name: 🚀 Publish the package
         run: dotnet nuget push .\Pipeline-packages\*.nupkg --skip-duplicate -k ${{ secrets.NUGET_API_KEY }} -s ${{ env.NUGET_SOURCE_URL }}
