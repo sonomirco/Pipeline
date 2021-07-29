@@ -47,6 +47,11 @@ jobs:
     name: 'Publish GitHub Packages'
     needs: build
     if: github.event_name == 'release'
+    environment:
+      name: 'GitHub Packages'
+      url: https://github.com/sonomirco/Pipeline/packages
+    permissions:
+      packages: write
     runs-on: windows-latest
     steps:          
       - name: 💾 Download Artefact
