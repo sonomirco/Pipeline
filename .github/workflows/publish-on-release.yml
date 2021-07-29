@@ -8,16 +8,13 @@ env:
   PROJECT_PATH: 'Pipeline.csproj'
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
   TAG_NAME: ${{ github.event.release.tag_name }}
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
 
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: windows-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: 🛎 Checkout repo
         uses: actions/checkout@v2
         with: 
@@ -41,5 +38,8 @@ jobs:
       - name: 📑 Dotnet NuGet Add Source
         run: dotnet nuget add source --username sonomirco --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/sonomirco/index.json"
     
-      - name: 🚀 Publish the package
+      - name: 🚀 Publish to GitHub packages
         run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+        
+      - name: 🚀 Publish to NuGet
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --skip-duplicate -k ${{ secrets.NUGET_KEY }} -s ${{ env.NUGET_SOURCE_URL }}
