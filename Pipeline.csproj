@@ -8,6 +8,7 @@
     <Version>$(Version)</Version>
     <PackageId>Pipeline.Basic</PackageId>
     <PackageDescription>A repo for testing a release pipeline.</PackageDescription>
+    <PackageProjectUrl>https://sonomirco/Pipeline</PackageProjectUrl>
     <Summary>A test repository.</Summary>
     <RepositoryUrl>https://github.com/sonomirco/Pipeline</RepositoryUrl>
   </PropertyGroup>
