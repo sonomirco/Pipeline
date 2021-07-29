@@ -24,9 +24,50 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
+          
+      - name: 🔧 Restore nuget with dotnet
+        run: dotnet restore ${{ env.PROJECT_PATH }}
       
       - name: 🧱 Build project
-        run: dotnet build -c release -p:Version=${{ env.TAG_NAME }}
-      - name: Publish NuGet package.
-        run: |
-          dotnet nuget push ./nupkg/Pipeline.Basic.${{ env.TAG_NAME }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ env.TAG_NAME }}
+
+      # create symbols package https://docs.microsoft.com/en-us/nuget/create-packages/symbol-packages-snupkg
+      - name: 📦 Create the package
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release -p:PackageVersion=${{ env.TAG_NAME }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+        
+      - name: 💿 Upload Artefacts
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: Pipeline-packages
+          path: ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+          
+  push-github-packages:
+    name: 'Publish GitHub Packages'
+    needs: build
+    if: github.event_name == 'release'
+    runs-on: windows-latest
+    steps:
+      - name: 💾 Download Artefact
+        uses: actions/download-artifact@v1
+        with:
+          name: 'Pipeline-packages'
+      
+      - name: 📑 Dotnet NuGet Add Source
+        run: dotnet nuget add source --username sonomirco --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/sonomirco/index.json"
+    
+      - name: 🚀 Publish the package
+        run: dotnet nuget push .\Pipeline-packages\*.nupkg --skip-duplicate --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+        
+  push-nuget:
+    name: 'Publish NuGet Packages'
+    needs: build
+    if: github.event_name == 'release'
+    runs-on: windows-latest
+    steps:
+      - name: 💾 Download Artefact
+        uses: actions/download-artifact@v1
+        with:
+          name: 'GShark-packages'
+          
+      - name: 🚀 Publish the package
+        run: dotnet nuget push .\Pipeline-packages\*.nupkg --skip-duplicate -k ${{ secrets.NUGET_API_KEY }} -s ${{ env.NUGET_SOURCE_URL }}
