@@ -26,7 +26,7 @@ jobs:
           dotnet-version: 5.0.x
       
       - name: 🧱 Build project
-      - run: dotnet build -c release -p:Version=${{ env.TAG_NAME }}
+        run: dotnet build -c release -p:Version=${{ env.TAG_NAME }}
       - name: Publish NuGet package.
         run: |
           dotnet nuget push ./nupkg/Pipeline.Basic.${{ env.TAG_NAME }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
