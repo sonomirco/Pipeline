@@ -3,13 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <Authors>Mirco Bianchini</Authors>
-    <AssemblyName>Pipeline.Basic</AssemblyName>
-    <PackageTitle>Pipeline Basic</PackageTitle>
-    <RepositoryType>git</RepositoryType>
     <Version>$(Version)</Version>
-    <PackageId>Pipeline.Basic</PackageId>
+    <PackageId>PipelineBasic</PackageId>
     <PackageDescription>A repo for testing a release pipeline.</PackageDescription>
-    <PackageProjectUrl>https://sonomirco/Pipeline</PackageProjectUrl>
     <Summary>A test repository.</Summary>
     <RepositoryUrl>https://github.com/sonomirco/Pipeline</RepositoryUrl>
   </PropertyGroup>
