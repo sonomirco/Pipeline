@@ -25,15 +25,8 @@ jobs:
         with:
           dotnet-version: 5.0.x
       
-      - name: 🔧 Restore nuget with dotnet
-        run: dotnet restore ${{ env.PROJECT_PATH }}
-
       - name: 🧱 Build project
-        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ github.event.release.tag_name }}
-
-      # create symbols package https://docs.microsoft.com/en-us/nuget/create-packages/symbol-packages-snupkg
-      - name: 📦 Create the package
-        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release -p:PackageVersion=${{ github.event.release.tag_name }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
-        
-      - name: 🚀 Publish to NuGet
-        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg --skip-duplicate -k ${{ secrets.NUGET_API_KEY }} -s ${{ env.NUGET_SOURCE_URL }}
+      - run: dotnet build -c release -p:Version=${{ env.TAG_NAME }}
+      - name: Publish NuGet package.
+        run: |
+          dotnet nuget push ./nupkg/Pipeline.Basic.${{ env.TAG_NAME }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}
