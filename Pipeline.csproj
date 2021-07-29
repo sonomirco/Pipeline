@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Pipeline</AssemblyName>
     <PackageTitle>Pipeline.TestPipeline</PackageTitle>
-    <PackageProjectUrl>https://sonomirco/Pipeline/</PackageProjectUrl>
+    <PackageProjectUrl>https://sonomirco/Pipeline</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <Version>$(Version)</Version>
     <PackageId>Pipeline.TestPipeline</PackageId>
