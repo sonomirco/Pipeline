@@ -6,7 +6,8 @@
     <Authors>Mirco Bianchini</Authors>
     <AssemblyName>PipelineBasic</AssemblyName>
     <Version>$(Version)</Version>
-    <PackageId>PipelineBasic</PackageId> // if not specify use the AssemblyName
+    <PackageId>PipelineBasic</PackageId>
+    <!-- if it is not defined use the AssemblyName property -->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/sonomirco/Pipeline</PackageProjectUrl>
     <PackageDescription>A repo for testing a release pipeline.</PackageDescription>
