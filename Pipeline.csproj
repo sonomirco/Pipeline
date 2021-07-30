@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="images\pipeline-basic-logo.png" Pack="true" Visible="true" PackagePath="\" />
+    <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 
 </Project>
