@@ -11,13 +11,15 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/sonomirco/Pipeline</PackageProjectUrl>
     <PackageDescription>A repo for testing a release pipeline.</PackageDescription>
-    <PackageIconUrl>
-      https://github.com/sonomirco/Pipeline/pipeline-basic-logo.png
-    </PackageIconUrl>
     <PackageTags>gitactions, release, templates</PackageTags>
+    <PackageIcon>pipeline-basic-logo.png</PackageIcon>
     <Summary>A test repository.</Summary>
     <RepositoryUrl>https://github.com/sonomirco/Pipeline</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="images\pipeline-basic-logo.png" Pack="true" Visible="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>
