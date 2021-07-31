@@ -1,5 +1,5 @@
 ![Target Framework](https://img.shields.io/badge/Target%20Framework-.Net5.0-blue.svg)
-[![Publish to Nuget](https://github.com/sonomirco/Pipeline/actions/workflows/publish-on-release.yml/badge.svg?branch=master)](https://github.com/sonomirco/Pipeline/actions/workflows/publish-on-release.yml)
+[![Create release](https://github.com/sonomirco/Pipeline/actions/workflows/create-release.yml/badge.svg?branch=develop&event=push)](https://github.com/sonomirco/Pipeline/actions/workflows/create-release.yml)
 ![Nuget](https://img.shields.io/nuget/v/PipelineBasic)
 
 ## Links
