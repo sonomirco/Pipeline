@@ -6,15 +6,15 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "Pipeline.Basic/2.0.0": {
+      "PipelineBasic/1.0.0": {
         "runtime": {
-          "Pipeline.Basic.dll": {}
+          "PipelineBasic.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Pipeline.Basic/2.0.0": {
+    "PipelineBasic/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
