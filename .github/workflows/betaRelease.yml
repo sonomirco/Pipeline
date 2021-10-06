@@ -1,10 +1,8 @@
 name: Publish Beta Release
 
 on:
-  pull_request:
-    types: [closed]
-    branches:
-      - develop
+  release:
+    types: [created]
     
 env:
   # Stop wasting time caching packages
