@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+    
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+          
       - name: 7Zip server
         run: 7z a -o${{ github.workspace }} -t7z -mx=9 artifact.7z ./bin/Debug/net5.0
       
