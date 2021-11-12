@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+      - id: pipelineRelease
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: sonomirco
+          repo: Pipeline
+          excludes: prerelease, draft
     
       - name: 🛎 Checkout repo
         uses: actions/checkout@v2
@@ -25,3 +31,4 @@ jobs:
       - name: 📜 Display
         run: |
           echo ${{ github.ref }}
+          echo ${{ steps.pipelineRelease.outputs.release }}
