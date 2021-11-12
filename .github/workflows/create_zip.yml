@@ -34,15 +34,15 @@ jobs:
           fetch-depth: 0
           
       - name: 7Zip server
-        run: 7z a -o${{ github.workspace }} -t7z -mx=9 artifact.7z ./bin/Debug/net5.0
+        run: 7z a -o${{ github.workspace }}/Output -t7z -mx=9 artifact.7z ./bin/Debug/net5.0
       
       - name: 📜 Display
         run: |
           echo ${{ github.ref }}
-          echo ${{ steps.get_release_out.outputs.release }}
-          echo ${{ steps.get_release.outputs.upload_url }}
-          echo $(basename ${{ github.workspace }})
-          for filename in ${{ github.workspace }}
+          echo ${{ steps.pipelineRelease.outputs.release }}
+          echo ${{ steps.get_release_out.outputs.upload_url }}
+          echo $(basename ${{ github.workspace }}/Output)
+          for filename in ${{ github.workspace }}/Output
           do
             echo $filename
           done;
