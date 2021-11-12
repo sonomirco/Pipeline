@@ -74,3 +74,18 @@ jobs:
             ${{ github.event.pull_request.body }}
           draft: false
           prerelease: false
+      
+      - name: 7Zip artifact
+        run: 7z a -t7z -mx=9 server.7z./bin/Debug/net5.0
+      
+      - uses: actions/upload-artifact@v1
+        with:
+          name: "uploadedArtifact"
+          path: artifact.7z
+
+      - name: Upload server binaries to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifact.7z
+          asset_name: artifact.7z
