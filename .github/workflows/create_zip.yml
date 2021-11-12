@@ -22,7 +22,7 @@ jobs:
           excludes: prerelease, draft
           
       - id : get_release_out
-      - uses: cardinalby/git-get-release-action@v1.1
+        uses: cardinalby/git-get-release-action@v1.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
