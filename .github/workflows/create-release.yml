@@ -94,5 +94,6 @@ jobs:
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.bump-with-alpha.outputs.result }}
           file: artifact.7z
           asset_name: artifact.7z
