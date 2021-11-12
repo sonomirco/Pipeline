@@ -76,12 +76,7 @@ jobs:
           prerelease: false
       
       - name: 7Zip artifact
-        run: 7z a -t7z -mx=9 server.7z./bin/Debug/net5.0
-      
-      - uses: actions/upload-artifact@v1
-        with:
-          name: "uploadedArtifact"
-          path: ${{ github.workspace }}/artifact.7z
+        run: 7z a -t7z -mx=9 artifact.7z ./bin/Debug/net5.0
 
       - name: Upload server binaries to release
         uses: svenstaro/upload-release-action@v1-release
