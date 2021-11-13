@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0
           
       - name: 7Zip server
-        run: 7z a -t7z -mx=9 myArtifact.7z ./bin/Debug/net5.0
+        run: 7z a -tzip -mx=9 myArtifact.zip ./bin/Debug/net5.0
         
       - name: Upload client binaries to release
         uses: svenstaro/upload-release-action@v1-release
