@@ -34,21 +34,20 @@ jobs:
           fetch-depth: 0
           
       - name: 7Zip server
-        run: 7z a -o${{ github.workspace }}/Output/ -t7z -mx=9 myArtifact.7z ./bin/Debug/net5.0
+        run: 7z a-tzip -mx=9 myArtifact.zip ./bin/Debug/net5.0
         
-      - name: Upload release binary
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload client binaries to release
+        uses: svenstaro/upload-release-action@v1-release
         with:
-          upload_url: ${{ steps.get_release_out.outputs.upload_url }}
-          asset_path: ${{ github.workspace }}/Output/myArtifact.7z
-          asset_name: myArtifact.7z
-          asset_content_type: application/7Zip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: myArtifact.zip
+          asset_name: myArtifact.zip
+          tag: "${{ steps.pipelineRelease.outputs.release }}"
+          overwrite: false
       
       - name: 📜 Display
         run: |
           echo ${{ github.ref }}
           echo ${{ steps.pipelineRelease.outputs.release }}
           echo ${{ steps.get_release_out.outputs.upload_url }}
-          echo $(basename ${{ github.workspace }}/Output/*)
+          #echo $(basename ${{ github.workspace }}/Output/*)
