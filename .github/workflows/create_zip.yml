@@ -13,9 +13,41 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+      # the output of this is only the tag, but you don't need check
+      - id: pipelineRelease
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: sonomirco
+          repo: Pipeline
+          excludes: prerelease, draft
+          
+      - id : get_release_out
+        uses: cardinalby/git-get-release-action@v1.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: ${{ steps.pipelineRelease.outputs.release }} 
+    
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+          
       - name: 7Zip server
-        run: 7z a -o${{ github.workspace }} -t7z -mx=9 artifact.7z ./bin/Debug/net5.0
+        run: 7z a -t7z -mx=9 myArtifact7z.7z ./bin/Debug/net5.0
+        
+      - name: Upload client binaries to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: myArtifact7z.7z
+          asset_name: myArtifact7z
+          tag: "${{ steps.pipelineRelease.outputs.release }}"
+          overwrite: false
       
       - name: 📜 Display
         run: |
           echo ${{ github.ref }}
+          echo ${{ steps.pipelineRelease.outputs.release }}
+          echo ${{ steps.get_release_out.outputs.upload_url }}
+          #echo $(basename ${{ github.workspace }}/Output/*)
