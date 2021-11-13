@@ -96,4 +96,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps.bump-with-alpha.outputs.result }}
           file: artifact.7z
-          asset_name: artifact.7z
+          asset_name: artifact
+          overwrite: false
