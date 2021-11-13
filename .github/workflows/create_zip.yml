@@ -34,16 +34,16 @@ jobs:
           fetch-depth: 0
           
       - name: 7Zip server
-        run: 7z a -t7z -mx=9 myArtifact7z.7z ./bin/Debug/net5.0
+        run: 7z a -tzip -mx=9 myArtifactZip.zip ./bin/Debug/net5.0
         
       - name: Upload client binaries to release
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: myArtifact7z.7z
-          asset_name: myArtifact7z
-          tag: "${{ steps.pipelineRelease.outputs.release }}"
-          overwrite: false
+          file: myArtifactZip.zip
+          asset_name: myArtifactZip
+          tag: ${{ github.ref }}
+          overwrite: true
       
       - name: 📜 Display
         run: |
