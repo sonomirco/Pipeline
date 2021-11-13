@@ -1,3 +1,7 @@
+![Target Framework](https://img.shields.io/badge/Target%20Framework-.Net5.0-blue.svg)
+[![Create release](https://github.com/sonomirco/Pipeline/actions/workflows/create-release.yml/badge.svg?branch=develop&event=push)](https://github.com/sonomirco/Pipeline/actions/workflows/create-release.yml)
+![Nuget](https://img.shields.io/nuget/v/PipelineBasic)
+
 ## Links
 [The Fastest NuGet Package Ever Published](https://rehansaeed.com/the-fastest-nuget-package-ever-published-probably/)
 
