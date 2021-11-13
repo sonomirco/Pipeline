@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0
           
       - name: 7Zip server
-        run: 7z a -o${{ github.workspace }}/Output/ -t7z -mx=9 myArtifact.7z ./bin/Debug/net5.0
+        run: 7z a -o${{ github.workspace }}/Output -t7z -mx=9 myArtifact.7z ./bin/Debug/net5.0
         
       - name: Upload release binary
         uses: actions/upload-release-asset@v1.0.2
@@ -51,4 +51,4 @@ jobs:
           echo ${{ github.ref }}
           echo ${{ steps.pipelineRelease.outputs.release }}
           echo ${{ steps.get_release_out.outputs.upload_url }}
-          echo $(basename ${{ github.workspace }}/Output/*)
+          echo $(basename ${{ github.workspace }}/Output)
