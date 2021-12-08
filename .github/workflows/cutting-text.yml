@@ -1,6 +1,9 @@
 name: Cutting text
 
 on:
+  push:
+    branches:
+      - develop
   workflow_dispatch:
   
 jobs:
