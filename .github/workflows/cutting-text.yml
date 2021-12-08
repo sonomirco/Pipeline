@@ -1,0 +1,68 @@
+name: Cutting text
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  setup:
+    name: bump-revision
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+          
+      - name: ⚙️ Get previous tag.
+        id: version
+        run: |
+          lastTag=`git tag -l --sort=-creatordate --format='%(refname:short)' | head -n 1`
+          echo "::set-output name=tag::$lastTag"
+      - name: ⚙️ Bump if alpha.
+        id: bump-with-alpha
+        uses: actions/github-script@v3
+        with:
+          result-encoding: string
+          script: |
+                const incoming = "${{steps.version.outputs.tag}}"
+                console.log("Incoming Tag: " + incoming)
+                if(incoming.includes('alpha')) {
+                  const oldNum = incoming.match(/alpha[.]*(\d+)/)[1]
+                  const newNum = parseInt(oldNum)+1
+                  const newTag = incoming.replace(/alpha.*\d+/, `alpha.${newNum}`)
+                  console.log("New Tag: " + newTag)
+                  return newTag
+                }
+                else {
+                  const newTag =incoming +'-alpha.0'
+                  console.log("New Tag: " + newTag)
+                  return newTag
+                }
+                
+      - shell: bash
+        run: |
+          expr "${{steps.bump-with-alpha.outputs.result}}" > revision.txt
+      - name: Upload revision
+        uses: actions/upload-artifact@v2
+        with:
+          name: revision
+          path: revision.txt
+
+  read-release:
+    name: release
+    needs: setup
+    runs-on: windows-latest
+    steps:
+    
+      - name: 📥 Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: revision
+          
+      - shell: bash
+        name: 📄 read file
+        run: |
+          value=`cat revision.txt`
+          echo $value | sed 's/^.\{3\}//'
+          echo "version_state=$value" >> $GITHUB_ENV
+          echo "${{ env.version_state }}"
