@@ -66,6 +66,6 @@ jobs:
         name: 📄 read file
         run: |
           value=`cat revision.txt`
-          echo $value | sed 's/^.\{3\}//'
+          echo $value | | sed -e 's/\<alpha.\>//g'
           echo "version_state=$value" >> $GITHUB_ENV
           echo "${{ env.version_state }}"
