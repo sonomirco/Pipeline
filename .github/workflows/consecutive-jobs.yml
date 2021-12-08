@@ -1,8 +1,7 @@
 name: Lint & Test
 
 on:
-  push:
-    branches: [ develop ]
+  workflow_dispatch:
     
 env:
   PROJECT_PATH: 'Pipeline.csproj'
