@@ -36,7 +36,7 @@
 
 
   <ItemGroup>
-    <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath=$(SolutionDir)library/PipelineBasic />
+    <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath="$(SolutionDir)library/PipelineBasic"/>
   </ItemGroup>
 	
 	<Target Name="CopyGhFiles" AfterTargets="Build">
