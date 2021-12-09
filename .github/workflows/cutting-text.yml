@@ -70,7 +70,7 @@ jobs:
           shortversion=`echo $version | sed 's/-\w\+//g'`
           echo "short_version=$shortversion" >> $GITHUB_ENV
           echo $version
-          echo $short_version
+          echo $shortversion
         
       - name: test
         run: |
