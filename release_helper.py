@@ -33,53 +33,54 @@ def get_url(url):
 def get_latest_commit():
     response = get_url(f'https://api.github.com/repos/hypar-io/{repository}/releases/latest')
     latest_release_json = json.loads(response.text)
-    return {
-        'name': latest_release_json['tag_name'],
-        'published_at': latest_release_json['published_at']
-    }
+    print(latest_release_json)
+#     return {
+#         'name': latest_release_json['tag_name'],
+#         'published_at': latest_release_json['published_at']
+#     }
 
 
-def add_relevant_commits(response):
-    commits = json.loads(response.text)
-    for commit in commits:
-        message = commit.get('commit').get('message')
-        if(message.startswith('Merge pull request')):
-            split_message = message.split('\n\n')
-            merge_commits.append(split_message[0].replace('Merge pull request ', '') + ': ' + split_message[1])
+# def add_relevant_commits(response):
+#     commits = json.loads(response.text)
+#     for commit in commits:
+#         message = commit.get('commit').get('message')
+#         if(message.startswith('Merge pull request')):
+#             split_message = message.split('\n\n')
+#             merge_commits.append(split_message[0].replace('Merge pull request ', '') + ': ' + split_message[1])
 
 
-latest_release_tag = get_latest_commit()
+# latest_release_tag = get_latest_commit()
 
-if latest_release_tag is None:
-    print('No latest release found')
-else:
-    print('---')
-    print('Latest release:', latest_release_tag['name'])
-    print(latest_release_tag['published_at'])
-    print('---')
-    if latest_release_tag['published_at'] is None:
-        sys.exit('Unable to parse creation date of last tag')
-    requests_sent = 0
-    # In the future if we want to specify branch, we can by passing in 'sha' query. See:
-    # https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#commits
-    url = f'https://api.github.com/repos/hypar-io/{repository}/commits?since=' + latest_release_tag['published_at'] + '&per_page=' + str(page_size)
-    response = get_url(url)
-    requests_sent += 1
-    add_relevant_commits(response)
-    while next := (response and response.links and response.links.get('next') and response.links.get('next').get('url')):
-        if requests_sent >= max_pages_to_read:
-            break
-        response = get_url(next)
-        add_relevant_commits(response)
-        requests_sent += 1
-    if next:
-        print('---')
-        print('We ran our maximum number of queries, but did not reach the end of the commits list. Please raise the limits to include our expected last page:')
-        print(response and response.links and response.links['last'] and response.links['last']['url'])
-        sys.exit('Did not fetch all of our applicable commits successfully.')
-    else:
-        print('---')
-        print('All Merge Commits Since', latest_release_tag['published_at'])
-        print('---')
-        for commit in merge_commits:
-            print(commit)
+# if latest_release_tag is None:
+#     print('No latest release found')
+# else:
+#     print('---')
+#     print('Latest release:', latest_release_tag['name'])
+#     print(latest_release_tag['published_at'])
+#     print('---')
+#     if latest_release_tag['published_at'] is None:
+#         sys.exit('Unable to parse creation date of last tag')
+#     requests_sent = 0
+#     # In the future if we want to specify branch, we can by passing in 'sha' query. See:
+#     # https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#commits
+#     url = f'https://api.github.com/repos/hypar-io/{repository}/commits?since=' + latest_release_tag['published_at'] + '&per_page=' + str(page_size)
+#     response = get_url(url)
+#     requests_sent += 1
+#     add_relevant_commits(response)
+#     while next := (response and response.links and response.links.get('next') and response.links.get('next').get('url')):
+#         if requests_sent >= max_pages_to_read:
+#             break
+#         response = get_url(next)
+#         add_relevant_commits(response)
+#         requests_sent += 1
+#     if next:
+#         print('---')
+#         print('We ran our maximum number of queries, but did not reach the end of the commits list. Please raise the limits to include our expected last page:')
+#         print(response and response.links and response.links['last'] and response.links['last']['url'])
+#         sys.exit('Did not fetch all of our applicable commits successfully.')
+#     else:
+#         print('---')
+#         print('All Merge Commits Since', latest_release_tag['published_at'])
+#         print('---')
+#         for commit in merge_commits:
+#             print(commit)
