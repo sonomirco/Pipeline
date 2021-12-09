@@ -54,6 +54,13 @@ jobs:
       
       - name: 🧱 Build project
         run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ steps.bump-with-alpha.outputs.result }}
+        
+      - name: Create text file
+        run: |-
+          cat <<EOT >> greetings.txt
+          line 1
+          line 2
+          EOT
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
@@ -61,4 +68,5 @@ jobs:
           name: pipeline-pack
           path: |
             ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\library
-            images\*
+            images/*
+            greetings.txt
