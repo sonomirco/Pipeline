@@ -8,8 +8,7 @@
 	  <TargetFramework>net5.0</TargetFramework>
     <Title>PipelineBasic</Title>
     <Authors>Mirco Bianchini</Authors>
-    <AssemblyName>PipelineBasic</AssemblyName>
-    <PackageId>PipelineBasic</PackageId>
+	  <PackageId>PipelineBasic</PackageId>
     <!-- if it is not defined use the AssemblyName property -->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/sonomirco/Pipeline</PackageProjectUrl>
@@ -24,11 +23,13 @@
     <When Condition="'$(Version)' == '' ">
       <PropertyGroup>
         <Version>0.0.0</Version>
+	      <AssemblyName>PipelineBasic</AssemblyName>
       </PropertyGroup>
     </When>
     <When Condition="'$(Version)' != '' ">
       <PropertyGroup>
         <Version>$(Version)</Version>
+	      <AssemblyName>PipelineBasic_$(Version)</AssemblyName>
       </PropertyGroup>
     </When>
   </Choose>
