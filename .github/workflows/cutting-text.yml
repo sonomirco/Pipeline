@@ -1,10 +1,10 @@
 name: Cutting text
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      -develop
-  workflow_dispatch:
+      - develop
   
 jobs:
   setup:
