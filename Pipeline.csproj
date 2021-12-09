@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <!--You can set this one-->
-	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	  <!--Or replace OutputPath with OutDir-->
-	  <OutputPath>$(SolutionDir)library/PipelineBasic</OutputPath>
-	  <TargetFramework>net5.0</TargetFramework>
+    <!--You can set this one-->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!--Or replace OutputPath with OutDir-->
+    <OutputPath>$(SolutionDir)library/PipelineBasic</OutputPath>
+    <TargetFramework>net5.0</TargetFramework>
     <Title>PipelineBasic</Title>
     <Authors>Mirco Bianchini</Authors>
-	  <PackageId>PipelineBasic</PackageId>
+    <PackageId>PipelineBasic</PackageId>
     <!-- if it is not defined use the AssemblyName property -->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/sonomirco/Pipeline</PackageProjectUrl>
@@ -36,7 +36,7 @@
 
 
   <ItemGroup>
-    <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath=""/>
+    <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath=$(SolutionDir)library/PipelineBasic/>
   </ItemGroup>
 	
 	<Target Name="CopyGhFiles" AfterTargets="Build">
