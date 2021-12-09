@@ -67,6 +67,6 @@ jobs:
         run: |
           value=`cat revision.txt`
           echo $value
-          newvalue=`echo $value | sed -ie 's/-[A-Za-z]//g'`
+          newvalue=`echo $value | sed -e 's/-[A-Za-z]//g'`
           echo $newvalue
           
