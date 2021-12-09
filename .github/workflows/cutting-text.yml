@@ -65,12 +65,15 @@ jobs:
       - shell: bash
         name: 📄 read file
         run: |
-          value=`cat revision.txt`
-          echo "version_state=$value" >> $GITHUB_ENV
+          version=`cat revision.txt`
+          echo "version_state=$version" >> $GITHUB_ENV
+          shortversion=`echo $version | sed 's/-\w\+//g'`
+          echo "short_version=$shortversion" >> $GITHUB_ENV
+          echo $version
+          echo $short_version
+        
+      - name: test
+        run: |
+          echo ${{ env.short_version }}
           echo ${{ env.version_state }}
-          newvalue=`echo $value | sed 's/-\w\+//g'`
-          echo "version_new=$newvalue" >> $GITHUB_ENV
-          echo ${{ env.version_new }}
-          echo $value
-          echo $newvalue
           
