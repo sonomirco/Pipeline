@@ -2,7 +2,8 @@ name: Create package artificat of a deployment
 
 on:
   push:
-    - develop
+    branches:
+      - develop
 
 env:
   PROJECT_PATH: 'Pipeline.csproj'
@@ -58,4 +59,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: pipeline-pack
-          path: library
+          path: ${{ PACKAGE_OUTPUT_DIRECTORY }}\library
