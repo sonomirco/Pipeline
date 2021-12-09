@@ -33,7 +33,7 @@ def get_url(url):
 def get_latest_commit():
     response = get_url(f'https://api.github.com/repos/hypar-io/{repository}/releases/latest')
     latest_release_json = json.loads(response.text)
-    print(latest_release_json)
+    return latest_release_json
 #     return {
 #         'name': latest_release_json['tag_name'],
 #         'published_at': latest_release_json['published_at']
@@ -49,7 +49,7 @@ def get_latest_commit():
 #             merge_commits.append(split_message[0].replace('Merge pull request ', '') + ': ' + split_message[1])
 
 
-# latest_release_tag = get_latest_commit()
+latest_release_tag = get_latest_commit()
 
 # if latest_release_tag is None:
 #     print('No latest release found')
