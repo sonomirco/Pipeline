@@ -59,4 +59,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: pipeline-pack
-          path: ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\library
+          path: |
+            ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\library
+            images\*
