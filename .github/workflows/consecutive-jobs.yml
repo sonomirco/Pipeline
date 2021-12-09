@@ -1,0 +1,95 @@
+name: Lint & Test
+
+on:
+  workflow_dispatch:
+    
+env:
+  PROJECT_PATH: 'Pipeline.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  TAG_NAME: ${{ github.event.release.tag_name }}
+  NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'    
+
+jobs:
+  setup:
+    name: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+          
+      - name: ⚙️ Get previous tag.
+        id: version
+        run: |
+          lastTag=`git tag -l --sort=-creatordate --format='%(refname:short)' | head -n 1`
+          echo "::set-output name=tag::$lastTag"
+      - name: ⚙️ Bump if alpha.
+        id: bump-with-alpha
+        uses: actions/github-script@v3
+        with:
+          result-encoding: string
+          script: |
+                const incoming = "${{steps.version.outputs.tag}}"
+                console.log("Incoming Tag: " + incoming)
+                if(incoming.includes('alpha')) {
+                  const oldNum = incoming.match(/alpha[.]*(\d+)/)[1]
+                  const newNum = parseInt(oldNum)+1
+                  const newTag = incoming.replace(/alpha.*\d+/, `alpha.${newNum}`)
+                  console.log("New Tag: " + newTag)
+                  return newTag
+                }
+                else {
+                  const newTag =incoming +'-alpha.0'
+                  console.log("New Tag: " + newTag)
+                  return newTag
+                }
+
+  build:
+    name: build
+    needs: setup
+    runs-on: windows-latest
+    steps:
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+
+      - name: 🚧 Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+        
+      - name: 🔧 Restore nuget with dotnet
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+      
+      - name: 🧱 Build project
+        run: |
+          msbuild.exe ${{ env.PROJECT_PATH }} /p:platform="Any CPU" /p:configuration="Release" /p:Version=${{ steps.bump-with-alpha.outputs.result }}
+        
+      - name: 📘 Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.bump-with-alpha.outputs.result }}
+          release_name: ${{ steps.bump-with-alpha.outputs.result }}
+          body: |
+            ## Title
+            ${{ github.event.pull_request.title }}
+            
+            ## Body
+            ${{ github.event.pull_request.body }}
+          draft: false
+          prerelease: false
+      
+      - name: 💾 7Zip library
+        run: 7z a -t7z -mx=9 artifact.7z ./bin/Debug/net5.0
+
+      - name: 📤 Upload library to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.bump-with-alpha.outputs.result }}
+          file: artifact.7z
+          asset_name: artifact.7z

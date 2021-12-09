@@ -1,0 +1,99 @@
+name: Create package artificat of a deployment
+
+on:
+  push:
+    branches:
+      - develop
+
+env:
+  PROJECT_PATH: 'Pipeline.csproj'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+
+      - name: 🚧 Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: ⚙️ Get previous tag.
+        id: version
+        run: |
+          lastTag=`git tag -l --sort=-creatordate --format='%(refname:short)' | head -n 1`
+          echo "::set-output name=tag::$lastTag"
+      - name: ⚙️ Bump if alpha.
+        id: bump-with-alpha
+        uses: actions/github-script@v3
+        with:
+          result-encoding: string
+          script: |
+                const incoming = "${{steps.version.outputs.tag}}"
+                console.log("Incoming Tag: " + incoming)
+                if(incoming.includes('alpha')) {
+                  const oldNum = incoming.match(/alpha[.]*(\d+)/)[1]
+                  const newNum = parseInt(oldNum)+1
+                  const newTag = incoming.replace(/alpha.*\d+/, `alpha.${newNum}`)
+                  console.log("New Tag: " + newTag)
+                  return newTag
+                }
+                else {
+                  const newTag =incoming +'-alpha.0'
+                  console.log("New Tag: " + newTag)
+                  return newTag
+                }
+      
+      - name: 🔧 Restore nuget with dotnet
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+      
+      - name: 🧱 Build project
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ steps.bump-with-alpha.outputs.result }}
+        
+      - name: Create text file
+        run: |-
+          cat <<EOT >> installation.txt
+          ### For Grasshopper
+          Copy the MMLibGh folder into the local folder:
+          C:\Users\"your username"\AppData\Roaming\Grasshopper\Libraries
+
+          ### For Dynamo in Revit
+          Copy the MMLibDyn folder into the local folder:
+          C:\Users\{USER}\AppData\Roaming\Dynamo\Dynamo {TARGET}\{VERSION}\pakages
+
+          ### For Dynamo in Civil3D
+          Copy the MMLibDyn folder into the local folder:
+          C:\Users\{USER}\AppData\Autodesk\C3D {VERSION}\Dynamo\{VERSION}\pakages
+          
+      - name: 📘 Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.bump-with-alpha.outputs.result }}
+          release_name: ${{ steps.bump-with-alpha.outputs.result }}
+          body: |
+            ## Title
+            
+            ## Body
+            
+          draft: false
+          prerelease: false
+          
+      - name: 💾 7Zip library
+        run: 7z a -t7z -mx=9 PipelineLib-${{ steps.bump-with-alpha.outputs.result }}.7z ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\library ./images installation.txt
+
+      - name: 📤 Upload library to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.bump-with-alpha.outputs.result }}
+          file: PipelineLib-${{ steps.bump-with-alpha.outputs.result }}.7z
+          asset_name: PipelineLib-${{ steps.bump-with-alpha.outputs.result }}.7z
+          overwrite: true
