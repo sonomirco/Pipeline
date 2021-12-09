@@ -59,23 +59,41 @@ jobs:
         run: |-
           cat <<EOT >> installation.txt
           ### For Grasshopper
-          Copy the MMLibGh folder into the local folder
-          ``C:\Users\"your username"\AppData\Roaming\Grasshopper\Libraries``
+          Copy the MMLibGh folder into the local folder:
+          C:\Users\"your username"\AppData\Roaming\Grasshopper\Libraries
 
           ### For Dynamo in Revit
-          Copy the MMLibDyn folder into the local folder
-          ``C:\Users\{USER}\AppData\Roaming\Dynamo\Dynamo {TARGET}\{VERSION}\pakages``
+          Copy the MMLibDyn folder into the local folder:
+          C:\Users\{USER}\AppData\Roaming\Dynamo\Dynamo {TARGET}\{VERSION}\pakages
 
           ### For Dynamo in Civil3D
           Copy the MMLibDyn folder into the local folder:
-          ``C:\Users\{USER}\AppData\Autodesk\C3D {VERSION}\Dynamo\{VERSION}\pakages``
-          EOF
+          C:\Users\{USER}\AppData\Autodesk\C3D {VERSION}\Dynamo\{VERSION}\pakages
           
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
+      - name: 📘 Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: pipeline-pack
-          path: |
-            ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\library
-            images/*
-            installation.txt
+          tag_name: ${{ steps.bump-with-alpha.outputs.result }}
+          release_name: ${{ steps.bump-with-alpha.outputs.result }}
+          body: |
+            ## Title
+            
+            ## Body
+            
+          draft: false
+          prerelease: false
+          
+      - name: 💾 7Zip library
+        run: 7z a -t7z -mx=9 PipelineLib-${{ steps.bump-with-alpha.outputs.result }}.7z ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\library ./images installation.txt
+
+      - name: 📤 Upload library to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.bump-with-alpha.outputs.result }}
+          file: PipelineLib-${{ steps.bump-with-alpha.outputs.result }}.7z
+          asset_name: PipelineLib-${{ steps.bump-with-alpha.outputs.result }}.7z
+          overwrite: true
