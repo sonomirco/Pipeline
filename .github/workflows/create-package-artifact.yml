@@ -78,4 +78,4 @@ jobs:
           path: |
             ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\library
             images/*
-            greetings.txt
+            installation.txt
