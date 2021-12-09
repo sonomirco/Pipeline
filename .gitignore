@@ -342,3 +342,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# Custom folder
+/library
+
+# Bin and obj folder
+bin/
+obj/
