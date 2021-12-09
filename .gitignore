@@ -111,6 +111,7 @@ ipch/
 *.vsp
 *.vspx
 *.sap
+*.vs
 
 # Visual Studio Trace Files
 *.e2e
@@ -347,5 +348,5 @@ healthchecksdb
 /library
 
 # Bin and obj folder
-bin/
-obj/
+/bin
+/obj
