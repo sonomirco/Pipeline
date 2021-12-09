@@ -57,11 +57,20 @@ jobs:
         
       - name: Create text file
         run: |-
-          cat <<EOT >> greetings.txt
-          line 1
-          line 2
-          EOT
+          cat <<EOT >> installation.txt
+          ### For Grasshopper
+          Copy the MMLibGh folder into the local folder
+          ``C:\Users\"your username"\AppData\Roaming\Grasshopper\Libraries``
 
+          ### For Dynamo in Revit
+          Copy the MMLibDyn folder into the local folder
+          ``C:\Users\{USER}\AppData\Roaming\Dynamo\Dynamo {TARGET}\{VERSION}\pakages``
+
+          ### For Dynamo in Civil3D
+          Copy the MMLibDyn folder into the local folder:
+          ``C:\Users\{USER}\AppData\Autodesk\C3D {VERSION}\Dynamo\{VERSION}\pakages``
+          EOF
+          
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
