@@ -1,0 +1,61 @@
+name: Create package artificat of a deployment
+
+on:
+  push:
+    - develop
+
+env:
+  PROJECT_PATH: 'Pipeline.csproj'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+
+      - name: 🚧 Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      - name: ⚙️ Get previous tag.
+        id: version
+        run: |
+          lastTag=`git tag -l --sort=-creatordate --format='%(refname:short)' | head -n 1`
+          echo "::set-output name=tag::$lastTag"
+      - name: ⚙️ Bump if alpha.
+        id: bump-with-alpha
+        uses: actions/github-script@v3
+        with:
+          result-encoding: string
+          script: |
+                const incoming = "${{steps.version.outputs.tag}}"
+                console.log("Incoming Tag: " + incoming)
+                if(incoming.includes('alpha')) {
+                  const oldNum = incoming.match(/alpha[.]*(\d+)/)[1]
+                  const newNum = parseInt(oldNum)+1
+                  const newTag = incoming.replace(/alpha.*\d+/, `alpha.${newNum}`)
+                  console.log("New Tag: " + newTag)
+                  return newTag
+                }
+                else {
+                  const newTag =incoming +'-alpha.0'
+                  console.log("New Tag: " + newTag)
+                  return newTag
+                }
+      
+      - name: 🔧 Restore nuget with dotnet
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+      
+      - name: 🧱 Build project
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ steps.bump-with-alpha.outputs.result }}
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: pipeline-pack
+          path: library
