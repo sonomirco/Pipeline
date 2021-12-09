@@ -67,7 +67,7 @@ jobs:
         run: |
           value=`cat revision.txt`
           echo $value
-          echo $value | sed -e 's/\<alpha.\>//g'
+          echo $value | sed -e 's/\<alpha[.]\>//g'
           #echo $newvalue
           #echo "version_new=$newvalue" >> $GITHUB_ENV
           echo "version_state=$value" >> $GITHUB_ENV
