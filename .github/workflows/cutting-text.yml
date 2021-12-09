@@ -66,9 +66,9 @@ jobs:
         name: 📄 read file
         run: |
           value=`cat revision.txt`
-          newvalue=`echo $value | sed 's/-\w\+//g'`
-          echo "version_new=$newvalue" >> $GITHUB_ENV
           echo "version_state=$value" >> $GITHUB_ENV
           echo "${{ env.version_state }}"
+          newvalue=`echo $value | sed 's/-\w\+//g'`
+          echo "version_new=$newvalue" >> $GITHUB_ENV
           echo "${{ env.version_new }}"
           
