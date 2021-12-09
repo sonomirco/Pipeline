@@ -36,16 +36,7 @@
 
 
   <ItemGroup>
-    <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath="$(SolutionDir)library/PipelineBasic"/>
+    <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath=""/>
   </ItemGroup>
-	
-	<Target Name="CopyGhFiles" AfterTargets="Build">
-		<ItemGroup>
-			<_FilesToCopy Include="images\pipeline-basic-logo.png" />
-		</ItemGroup>
-		<Message Text="image to copy: @(_FilesToCopy)" Importance="high" />
-		<Copy SourceFiles="@(_FilesToCopy)" DestinationFolder="$(SolutionDir)library/PipelineBasic" />
-		<Message Text="Files copied" Importance="high" />
-	</Target>
 
 </Project>
