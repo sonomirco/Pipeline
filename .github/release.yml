@@ -1,0 +1,20 @@
+changelog:
+  exclude:
+    labels:
+      - duplicate
+  categories:
+    - title: Breaking Changes 🛠
+      labels:
+        - major
+        - minor
+    - title: Exciting New Features 🎉
+      labels:
+        - path
+        - enhancement
+    - title: Other Changes
+      labels:
+        - "*"
+  template: |
+  ## What’s Changed
+
+  ### 🦈 Contributors
