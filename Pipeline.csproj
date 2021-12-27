@@ -8,6 +8,7 @@
     <AssemblyName>PipelineBasic</AssemblyName>
     <Version>$(Version)</Version>
     <PackageId>PipelineBasic</PackageId>
+    <AssemblyName>PipelineBasic</AssemblyName>
     <!-- if it is not defined use the AssemblyName property -->
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/sonomirco/Pipeline</PackageProjectUrl>
@@ -18,6 +19,7 @@
     <RepositoryUrl>https://github.com/sonomirco/Pipeline</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
+
   <ItemGroup>
     <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath=""/>
   </ItemGroup>
