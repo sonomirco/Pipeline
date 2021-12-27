@@ -17,20 +17,6 @@
     <RepositoryUrl>https://github.com/sonomirco/Pipeline</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-  <Choose>
-    <When Condition="'$(Version)' == '' ">
-      <PropertyGroup>
-        <Version>0.0.0</Version>
-	      <AssemblyName>PipelineBasic</AssemblyName>
-      </PropertyGroup>
-    </When>
-    <When Condition="'$(Version)' != '' ">
-      <PropertyGroup>
-        <Version>$(Version)</Version>
-	      <AssemblyName>PipelineBasic_$(Version)</AssemblyName>
-      </PropertyGroup>
-    </When>
-  </Choose>
 	 
   <ItemGroup>
     <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath=""/>
