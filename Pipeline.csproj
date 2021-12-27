@@ -5,6 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <Title>PipelineBasic</Title>
     <Authors>Mirco Bianchini</Authors>
+    <AssemblyName>PipelineBasic</AssemblyName>
     <Version>$(Version)</Version>
     <PackageId>PipelineBasic</PackageId>
     <!-- if it is not defined use the AssemblyName property -->
@@ -17,21 +18,6 @@
     <RepositoryUrl>https://github.com/sonomirco/Pipeline</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-  <Choose>
-    <When Condition="'$(Version)' == '' ">
-      <PropertyGroup>
-        <Version>0.0.0</Version>
-	      <AssemblyName>PipelineBasic</AssemblyName>
-      </PropertyGroup>
-    </When>
-    <When Condition="'$(Version)' != '' ">
-      <PropertyGroup>
-        <Version>$(Version)</Version>
-	      <AssemblyName>PipelineBasic_$(Version)</AssemblyName>
-      </PropertyGroup>
-    </When>
-  </Choose>
-	 
   <ItemGroup>
     <None Include="images\pipeline-basic-logo.png" Pack="true" PackagePath=""/>
   </ItemGroup>
