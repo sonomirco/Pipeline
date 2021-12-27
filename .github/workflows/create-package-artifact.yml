@@ -7,6 +7,7 @@ on:
 
 env:
   PROJECT_PATH: 'Pipeline.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
 
 jobs:
   build:
@@ -53,7 +54,7 @@ jobs:
         run: dotnet restore ${{ env.PROJECT_PATH }}
       
       - name: 🧱 Build project
-        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ steps.bump-with-alpha.outputs.result }}
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release -p:Version=${{ steps.bump-with-alpha.outputs.result }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
         
       - name: Create text file
         run: |-
@@ -87,7 +88,7 @@ jobs:
           prerelease: false
           
       - name: 💾 7Zip library
-        run: 7z a -t7z -mx=9 PipelineLib-${{ steps.bump-with-alpha.outputs.result }}.7z ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\library ./images installation.txt
+        run: 7z a -t7z -mx=9 PipelineLib-${{ steps.bump-with-alpha.outputs.result }}.7z ${{ env.PACKAGE_OUTPUT_DIRECTORY }} ./images installation.txt
 
       - name: 📤 Upload library to release
         uses: svenstaro/upload-release-action@v1-release
