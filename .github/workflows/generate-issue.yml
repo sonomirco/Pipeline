@@ -1,0 +1,35 @@
+name: Generare an issue
+# https://github.com/octokit/request-action
+# Using a rest api call and manually trigger the workflow we are genereting an issue.
+
+on:
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      name:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Set the issue name'
+        # Default value if no value is explicitly provided
+        default: 'This is a default issue'
+        # Input has to be provided for the workflow to run
+        required: true
+        
+jobs:
+  logLatestRelease:
+    runs-on: ubuntu-latest
+    steps:
+      # Get the name of the repo
+      - run: echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+        shell: bash
+      
+      - uses: octokit/request-action@v2.x
+        id: get_topics
+        with:
+          route: POST /repos/{owner}/{repo}/issues
+          owner: ${{github.repository_owner}}
+          repo: ${{ env.REPOSITORY_NAME }}
+          title: ${{ github.event.inputs.name }}
+          body: "This is a generated issue"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
