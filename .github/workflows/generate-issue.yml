@@ -3,8 +3,6 @@ name: Generare an issue
 # Using a rest api call and manually trigger the workflow we are genereting an issue.
 
 on:
-  push:
-    branches: [master]
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
@@ -30,7 +28,7 @@ jobs:
           route: POST /repos/{owner}/{repo}/issues
           owner: ${{github.repository_owner}}
           repo: ${{ env.REPOSITORY_NAME }}
-          title: ${{ github.event.inputs.name }}
+          title: "${{ github.event.inputs.name }}"
           body: "This is a generated issue"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
