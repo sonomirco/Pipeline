@@ -3,6 +3,8 @@ name: Generare an issue
 # Using a rest api call and manually trigger the workflow we are genereting an issue.
 
 on:
+  push:
+    branches: [master]
   workflow_dispatch:
     # Inputs the workflow accepts.
     inputs:
