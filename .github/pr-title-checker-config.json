@@ -1,0 +1,16 @@
+{
+  "LABEL": {
+    "name": "title needs formatting",
+    "color": "#f5c014"
+  },
+  "CHECKS": {
+    "prefixes": [],
+    "regexp": "^[^<>\\'\\\"/;\\`%]*$",
+    "alwaysPassCI": true
+  },
+  "MESSAGES": {
+    "success": "All OK",
+    "failure": "Title need to be reformated",
+    "notice": ""
+  }
+}
