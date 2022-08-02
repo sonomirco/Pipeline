@@ -12,6 +12,6 @@ jobs:
 
       - name: 📜 Display
         run: |
-          for file in grasshoperYak/*; do
+          for file in grasshoperYak//*; do
             echo $file
           done
