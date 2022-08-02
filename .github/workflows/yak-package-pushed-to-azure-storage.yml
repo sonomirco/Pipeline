@@ -12,6 +12,6 @@ jobs:
 
       - name: 📜 Display
         run: |
-          for file in images/*; do
+          for file in ./images; do
             echo "$(basename "$file")"
           done
