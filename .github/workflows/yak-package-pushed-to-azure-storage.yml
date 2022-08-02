@@ -5,6 +5,11 @@ jobs:
   upload:
     runs-on: windows-latest
     steps:
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
+          
       - name: 📥 Download yak
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
@@ -12,5 +17,5 @@ jobs:
 
       - name: 📜 Display
         run: |
-          foreach ($filename in $(ls ./images/*)) { echo $filename }
+          foreach ($filename in $(ls ./images)) { echo $filename }
           #echo $(basename ./grasshoperYak)
