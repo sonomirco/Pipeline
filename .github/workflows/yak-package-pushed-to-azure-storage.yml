@@ -12,4 +12,6 @@ jobs:
 
       - name: 📜 Display
         run: |
-          echo $(basename ./grasshoperYak/*)
+          for file in /grasshoperYak/*; do
+            echo "${file##*/}"
+          done
