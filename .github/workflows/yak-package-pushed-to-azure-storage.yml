@@ -12,6 +12,4 @@ jobs:
 
       - name: 📜 Display
         run: |
-          for file in /grasshoperYak/*; do
-            echo "${file##*/}"
-          done
+          find /grasshoperYak -type f -printf "%f\n"
