@@ -1,0 +1,15 @@
+name: Create a yak page and push to azure
+on: push
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Yak
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: curl -o ${{ github.workspace }}/yak http://files.mcneel.com/yak/tools/latest/yak.exe
+
+      - name: 📜 Display
+        run: |
+          echo $(basename ${{ github.workspace }}/yak/*)
