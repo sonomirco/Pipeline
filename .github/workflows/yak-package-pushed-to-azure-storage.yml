@@ -12,4 +12,4 @@ jobs:
 
       - name: 📜 Display
         run: |
-          find /grasshoperYak -type f -printf "%f\n"
+          find ./grasshoperYak/* -type f -printf "%f\n"
