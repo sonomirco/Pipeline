@@ -12,4 +12,4 @@ jobs:
 
       - name: 📜 Display
         run: |
-          echo $(basename ./images/*)
+          echo $(basename ./images)
