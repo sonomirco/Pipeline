@@ -1,6 +1,9 @@
 name: Create a yak page and push to azure
 on: push
 
+env:
+  YAK_PATH: 'grasshoperYak/'
+
 jobs:
   upload:
     runs-on: ubuntu-latest
@@ -8,16 +11,16 @@ jobs:
       - name: 📥 Download yak
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        run: curl -o ${{ github.workspace }}/yak.exe http://files.mcneel.com/yak/tools/latest/yak.exe
+        run: curl -o ${{ github.workspace }}/yak/yak.exe http://files.mcneel.com/yak/tools/latest/yak.exe
         
       - name: 📦 Build yak package
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        run: ${{ github.workspace }}\yak.exe build
+        run: ${{ github.workspace }}\yak\yak.exe build
         # I prepopulated a manifest file and copied it next to the .gha
-        working-directory: grasshoperYak
+        working-directory: ${{ env.YAK_PATH }}
 
       - name: 📜 Display
         run: |
-          echo $(basename ${{ github.workspace }}/*)
+          echo $(basename ${{ github.workspace }}/yak/*)
           echo $(basename grasshoperYak/*)
