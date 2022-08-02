@@ -12,7 +12,4 @@ jobs:
 
       - name: 📜 Display
         run: |
-          for file in ./grasshoperYak/*
-          do
-            echo $file
-          done;
+          #echo $(basename ./images/*)
