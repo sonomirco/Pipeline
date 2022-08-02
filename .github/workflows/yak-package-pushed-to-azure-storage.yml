@@ -12,5 +12,5 @@ jobs:
 
       - name: 📜 Display
         run: |
-          for filename in $(ls ./grasshoperYak/); do echo $filename; done
+          foreach ($filename in $(ls ./grasshoperYak/)) { echo $filename }
           #echo $(basename ./grasshoperYak)
