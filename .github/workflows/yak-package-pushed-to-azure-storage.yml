@@ -15,7 +15,7 @@ jobs:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: ${{ github.workspace }}\yak.exe build
         # I prepopulated a manifest file and copied it next to the .gha
-        working-directory: ./grasshopperYak
+        working-directory: grasshopperYak
 
       - name: 📜 Display
         run: |
