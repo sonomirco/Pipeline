@@ -3,7 +3,7 @@ on: push
 
 jobs:
   upload:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: 📥 Download yak
         env:
@@ -12,6 +12,6 @@ jobs:
 
       - name: 📜 Display
         run: |
-          for file in grasshoperYak//*; do
+          for file in grasshoperYak/*; do
             echo $file
           done
