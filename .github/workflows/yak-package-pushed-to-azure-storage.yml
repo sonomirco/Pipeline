@@ -16,4 +16,4 @@ jobs:
       - name: 📜 Display
         run: |
           #echo $(basename ${{ github.workspace }}/*)
-          echo $(basename grasshoperYak/*)
+          echo $(basename ./grasshoperYak/*)
