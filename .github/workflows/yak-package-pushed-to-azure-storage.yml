@@ -12,4 +12,6 @@ jobs:
 
       - name: 📜 Display
         run: |
-          find ./images -type f -printf "%f\n"
+          for file in images/*; do
+            echo "$(basename "$file")"
+          done
