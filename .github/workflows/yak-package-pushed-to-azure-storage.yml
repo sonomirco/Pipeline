@@ -12,4 +12,8 @@ jobs:
 
       - name: 📜 Display
         run: |
-          echo $(basename ./grasshoperYak)
+          for filename in $(ls ./grasshoperYak/)
+          do
+            echo $filename
+          done;
+          #echo $(basename ./grasshoperYak)
