@@ -23,8 +23,5 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            $fileShareName="yakfolder"
-            $ctx=New-AzStorageContext -ConnectionString "${{secrets.AZURE_STORAGE_CONNECTION_STRING}}"
-            $fileShare=Get-AZStorageShare -Context $ctx -Name $fileShareName
-            echo $fileShare
+            ./yakPush.ps1 -conString "${{secrets.AZURE_STORAGE_CONNECTION_STRING}}" -fileStored "./grasshoperYak"
           azPSVersion: "latest"
