@@ -16,6 +16,7 @@ jobs:
 
       - name: 📜 Display
         run: |
+              Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
               if (Get-Module -ListAvailable -Name Az) {
                   Write-Host "Module exists"
               } 
