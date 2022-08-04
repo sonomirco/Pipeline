@@ -23,5 +23,6 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            ./yakPush.ps1 -$conString "${{secrets.AZURE_STORAGE_CONNECTION_STRING}}" -fileStored "./grasshoperYak"
+            $ctx = New-AzStorageContext -ConnectionString "DefaultEndpointsProtocol=https;AccountName=sandboxgh;AccountKey=Ge1eymfgWfs4wiU8o5mQ0UcmvDJS9xwQ065HPgm4cv+5q2m94CiJ8QrrHfSKql4CevYm6dP9zQyq+ASt2kNAPw==;EndpointSuffix=core.windows.net"
+            echo $ctx
           azPSVersion: "latest"
