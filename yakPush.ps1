@@ -1,4 +1,4 @@
-param($conString, $fileToStore)
+param($conString, $fileStored)
 $fileShareName="yakfolder"
 $folderPath="/"
 
@@ -8,8 +8,9 @@ $fileShare=Get-AZStorageShare -Context $ctx -Name $fileShareName
 echo $fileShare
 ## Upload the file
 
-if (Test-Path -Path $fileToStore -PathType Leaf) {
+if (Test-Path -Path $fileStored) {
      try {
+        $fileToStore=Get-ChildItem -path $fileStored -filter *.yak -file -ErrorAction silentlycontinue -recurse
         Set-AzStorageFileContent -Sharename $fileShare.Name -context $ctx -Source $fileToStore -Path $folderPath -Force
      }
      catch {
@@ -22,4 +23,4 @@ if (Test-Path -Path $fileToStore -PathType Leaf) {
  }
 
 ## Disconnect from Azure Account  
-Disconnect-AzAccount 
+Disconnect-AzAccount
