@@ -13,6 +13,18 @@ jobs:
         with: 
           fetch-depth: 0
           
+      - name: 📥 Download yak
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: curl -o ${{ github.workspace }}/yak.exe http://files.mcneel.com/yak/tools/latest/yak.exe
+        
+      - name: 📦 Build yak package
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        run: ${{ github.workspace }}/yak.exe build
+        # I prepopulated a manifest file and copied it next to the .gha
+        working-directory: ${{ env.YAK_PATH }}
+          
       - name: Login via Az module
         uses: azure/login@v1
         with:
@@ -23,5 +35,5 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            ./yakPush.ps1 -conString "${{secrets.AZURE_STORAGE_CONNECTION_STRING}}" -fileStored "./grasshoperYak"
+            ./yakPush.ps1 -conString "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" -fileStored "${{ env.YAK_PATH }}"
           azPSVersion: "latest"
