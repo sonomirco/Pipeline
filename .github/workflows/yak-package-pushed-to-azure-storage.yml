@@ -17,6 +17,11 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{secrets.AZURE_CREDS}}
-          enable-AzPSSession: true 
-      - run: |
-            Get-AzStorageBlob -Container "sandbox-yak" -Blob blob*
+          enable-AzPSSession: true
+          
+      - name: Deploy Hub
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            .yakPush.ps1 -$conString "${{secrets.AZURE_STORAGE_CONNECTION_STRING}}" -fileStored "./grasshoperYak"
+          azPSVersion: "latest"
