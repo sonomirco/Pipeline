@@ -14,12 +14,10 @@ jobs:
           fetch-depth: 0
           
 
-      - name: 📜 Display
-        run: |
-              Install-Module -Name Az -Repository PSGallery -AllowClobber
-              if (Get-Module -ListAvailable -Name Az) {
-                  Write-Host "Module exists"
-              } 
-              else {
-                  Write-Host "Module does not exist"
-              }
+      - name: Login via Az module
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDS}}
+          enable-AzPSSession: true 
+      - run: |
+            Get-AzStorageBlob -Container "sandbox-yak" -Blob blob*
