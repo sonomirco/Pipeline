@@ -35,5 +35,5 @@ jobs:
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            ./yakPush.ps1 -conString "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" -fileStored "${{ env.YAK_PATH }}"
+            ./.github/yakPush.ps1 -conString "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" -fileStored "${{ env.YAK_PATH }}"
           azPSVersion: "latest"
