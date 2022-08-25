@@ -28,12 +28,12 @@ jobs:
       - name: Login via Az module
         uses: azure/login@v1
         with:
-          creds: ${{secrets.AZURE_CREDS}}
+          creds: ${{secrets.AZURE_MM}}
           enable-AzPSSession: true
           
       - name: Deploy Hub
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            ./.github/yakPush.ps1 -conString "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" -fileStored "${{ env.YAK_PATH }}"
+            ./.github/yakPush.ps1 -conString "${{ secrets.AZURE_CONNECTSTRING_MM }}" -fileStored "${{ env.YAK_PATH }}"
           azPSVersion: "latest"
