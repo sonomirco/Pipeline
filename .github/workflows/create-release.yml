@@ -8,7 +8,7 @@ on:
 
 env:
   PROJECT_PATH: 'Pipeline.csproj'
-  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
   TAG_NAME: ${{ github.event.release.tag_name }}
   NUGET_SOURCE_URL: 'https://api.nuget.org/v3/index.json'
 
