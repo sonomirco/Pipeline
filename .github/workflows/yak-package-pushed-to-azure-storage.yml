@@ -28,14 +28,12 @@ jobs:
       - name: Login via Az module
         uses: azure/login@v1
         with:
-          client-id: "37b60b67-2164-42b6-aecb-7c76166c7870"
-          tenant-id: "a2bed0c4-5957-4f73-b0c2-a811407590fb"
-          subscription-id: "df00894b-e79b-4faa-85e2-ccf32a09a22c" 
+          creds: ${{secrets.AZURE_CREDS}}
           enable-AzPSSession: true
           
       - name: Deploy Hub
         uses: azure/powershell@v1
         with:
           inlineScript: |
-            ./.github/yakPush.ps1 -conString "${{ secrets.AZURE_CONNECTSTRING_MM }}" -fileStored "${{ env.YAK_PATH }}"
+            ./.github/yakPush.ps1 -conString "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" -fileStored "${{ env.YAK_PATH }}"
           azPSVersion: "latest"
