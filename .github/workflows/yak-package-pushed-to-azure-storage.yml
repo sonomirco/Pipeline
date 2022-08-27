@@ -28,7 +28,7 @@ jobs:
       - name: Login via Az module
         uses: azure/login@v1
         with:
-          creds: ${{secrets.AZURE_CREDITS}}
+          creds: ${{secrets.AZURE_CREDS}}
           enable-AzPSSession: true
           
       - name: Deploy Hub
