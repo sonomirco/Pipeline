@@ -11,14 +11,16 @@ jobs:
     permissions:
       contents: write
       pull-requests: read
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - uses: release-drafter/release-drafter@v5
         id: release
-        with:
-          publish: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+        
       - name: read release
         run: echo ${{ steps.release.outputs.tag_name }}
+        
+      - uses: eregon/publish-release@v1
+        with:
+          release_id: ${{ steps.release.outputs.id }}
