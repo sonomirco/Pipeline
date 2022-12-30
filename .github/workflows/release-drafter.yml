@@ -17,6 +17,8 @@ jobs:
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          publish: true
       
       - name: read release
         run: echo ${{ steps.release.outputs.tag_name }}
