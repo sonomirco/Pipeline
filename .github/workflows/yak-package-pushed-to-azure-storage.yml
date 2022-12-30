@@ -1,5 +1,6 @@
 name: Create a yak page and push to azure
-on: push
+on:
+  workflow_dispatch:
 
 env:
   YAK_PATH: './grasshoperYak'
