@@ -19,4 +19,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: read release
-        run: echo ${{ release.outputs.tag_name }}
+        run: echo ${{ steps.release.outputs.tag_name }}
