@@ -92,6 +92,7 @@ def check_pr():
         for review in pr_reviews:
             print(f"review user -> {review.user.login} - review state -> {review.state}")
             if review.user.login == 'github-actions[bot]':
+                print('I am a bot')
                 if review.state == 'REQUEST_CHANGES':
                     print(f"type -> {type(review)}")
                     review.dismiss("All good")
