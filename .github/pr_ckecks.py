@@ -51,13 +51,27 @@ def check_pr():
     repo_name = get_env_var('GITHUB_REPOSITORY')
     github_ref = get_env_var('GITHUB_REF')
     github_event_name = get_env_var('GITHUB_EVENT_NAME')
+    pr_number = None
     
-    print(f"repo name -> {repo_name} - event -> {github_event_name}")
+    print(f"repo name -> {repo_name} - ref -> {github_ref} - event -> {github_event_name}")
     
     # Create a repository object, using the GitHub token
-    repo = Github(token).get_repo(repo_name)
+    repo = Github(args.token).get_repo(repo_name)
     
+    try:
+        pr_number = int(re.search('refs/pull/([0-9]+)/merge', github_ref).group(1))
+    except AttributeError:
+        print('ERROR: The pull request number could not be extracted from 'f'GITHUB_REF = "{github_ref}"', file=sys.stderr)
+        sys.exit(1)
 
+    print(f'Pull request number: {pr_number}')
+    
+    # Create a pull request object
+    pr = repo.get_pull(pr_number)
+    
+    # Get the pull request labels
+    pr_labels = pr.get_labels()
+    print(f'Pr labels: {pr_labels}')
     
 if __name__ == "__main__":
     check_pr()
