@@ -52,6 +52,8 @@ def check_pr():
     github_ref = get_env_var('GITHUB_REF')
     github_event_name = get_env_var('GITHUB_EVENT_NAME')
     pr_number = None
+    is_labels_check_failing = False
+    is_title_check_failing = False
     
     print(f"repo name -> {repo_name} - ref -> {github_ref} - event -> {github_event_name}")
     
@@ -69,13 +71,30 @@ def check_pr():
     # Create a pull request object
     pr = repo.get_pull(pr_number)
     
-    # Get the pull request labels
+    # Get the pull request labels and check if the PR has labels.
     pr_labels = pr.get_labels()
     if pr_labels.totalCount == 0:
+        is_labels_check_failing = True
         pr.create_review(
             body='This pull request has not labels. Please provide at list one labels identifing this pull request.',
             event='REQUEST_CHANGES')
     print(f'Pr labels: {pr_labels.totalCount}')
+    
+    # Check the title of the PR
+    pr_title = pr.title
+    print(f'Pr title: {pr_title}')
+    match = re.search('[^0-9A-Za-z ]', pr_title)
+    if match == '':
+        print('I am empty')
+    
+    if is_labels_check_failing == False && is_title_check_failing == False:
+        pr_reviews = pr.get_reviews()
+        for review in pr_reviews:
+            print(f"review user -> {review.user.login} - review state -> {review.state}")
+            if review.user.login == 'github-actions[bot]':
+                if review.state == 'REQUEST_CHANGES':
+                    pr.delete_review_request(reviewers=['github-actions[bot]'])
+        
     
 if __name__ == "__main__":
     check_pr()
