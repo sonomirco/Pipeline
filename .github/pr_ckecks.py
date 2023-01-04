@@ -84,7 +84,8 @@ def check_pr():
     pr_title = pr.title
     print(f'Pr title: {pr_title}')
     match = re.search('[^0-9A-Za-z ]', pr_title)
-    if match != '':
+    print(match)
+    if match != None:
         is_title_check_failing = True
         pr.create_review(
             body='☠️ Title with special characters, please fix it!',
