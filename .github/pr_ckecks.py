@@ -48,9 +48,9 @@ def check_pr():
     valid_labels = [label.strip() for label in args.valid_labels.split(',')]
     print(f'Valid labels are: {valid_labels}')
     
-    repo_name = os.get_env_var('GITHUB_REPOSITORY')
-    github_ref = os.get_env_var('GITHUB_REF')
-    github_event_name = os.get_env_var('GITHUB_EVENT_NAME')
+    repo_name = get_env_var('GITHUB_REPOSITORY')
+    github_ref = get_env_var('GITHUB_REF')
+    github_event_name = get_env_var('GITHUB_EVENT_NAME')
     
     print(f"repo name -> {repo_name} - event -> {github_event_name}")
     
