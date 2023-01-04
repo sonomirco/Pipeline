@@ -71,6 +71,10 @@ def check_pr():
     
     # Get the pull request labels
     pr_labels = pr.get_labels()
+    if pr_labels.totalCount == 0:
+        pr.create_review(
+            body='This pull request has not labels. Please provide at list one labels identifing this pull request.',
+            event='REQUEST_CHANGES')
     print(f'Pr labels: {pr_labels.totalCount}')
     
 if __name__ == "__main__":
