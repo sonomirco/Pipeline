@@ -71,7 +71,7 @@ def check_pr():
     
     # Get the pull request labels
     pr_labels = pr.get_labels()
-    print(f'Pr labels: {len(pr_labels)}')
+    print(f'Pr labels: {pr_labels.totalCount}')
     
 if __name__ == "__main__":
     check_pr()
