@@ -5,7 +5,7 @@ import argparse
 import distutils.util
 from github import Github
 
-def get_env_var(env_var_name, echo_value=False):
+def get_env_var(env_var_name, echo_value=True):
     """Try to get the value from a environmental variable.
     If the values is 'None', then a ValueError exception will
     be thrown.
@@ -36,30 +36,29 @@ def read_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Create player id dataframe")
     # we will parse the list as a string.
     parser.add_argument("--token", type=str, help="The GitHub token")
-    parser.add_argument("--valid_labels", type=str, help="The valid labels")
-    
     args = parser.parse_args()
     return args
   
-def check_pr():
+def pull_request_checker():
     args = read_args()
-    print(f"inputs -> {args.token} - type -> {type(args.token)}")
+    if args.token == None or args.token == '':
+        print('The action need a GitHub token')
+        sys.exit(1)
     
-    valid_labels = [label.strip() for label in args.valid_labels.split(',')]
-    print(f'Valid labels are: {valid_labels}')
-    
+    # Collects GitHub variables.
     repo_name = get_env_var('GITHUB_REPOSITORY')
     github_ref = get_env_var('GITHUB_REF')
     github_event_name = get_env_var('GITHUB_EVENT_NAME')
+    
     pr_number = None
     is_labels_check_failing = False
     is_title_check_failing = False
+   
     
-    print(f"repo name -> {repo_name} - ref -> {github_ref} - event -> {github_event_name}")
-    
-    # Create a repository object, using the GitHub token
+    # Creates a repository object, using the GitHub token.
     repo = Github(args.token).get_repo(repo_name)
     
+    # Gets the pull request number.
     try:
         pr_number = int(re.search('refs/pull/([0-9]+)/merge', github_ref).group(1))
     except AttributeError:
@@ -73,24 +72,24 @@ def check_pr():
     
     # Get the pull request labels and check if the PR has labels.
     pr_labels = pr.get_labels()
+    print(f'Pr labels: {pr_labels.totalCount}')
     if pr_labels.totalCount == 0:
         is_labels_check_failing = True
         pr.create_review(
             body='This pull request has not labels. Please provide at list one labels identifing this pull request.',
             event='REQUEST_CHANGES')
-    print(f'Pr labels: {pr_labels.totalCount}')
     
-    # Check the title of the PR
+    # Checks the title of the pull request.
     pr_title = pr.title
-    print(f'Pr title: {pr_title}')
     match = re.search('[^0-9A-Za-z ]', pr_title)
-    print(f"Title match -> {match}")
+    print(f"Pr title: {pr_title} - Title match -> {match}")
     if match != None:
         is_title_check_failing = True
         pr.create_review(
             body='☠️ The pull request title must be without special characters. Please fix it!',
             event='REQUEST_CHANGES')
     
+    # Dimisses the reviews if all the checks pass.
     if is_labels_check_failing == False and is_title_check_failing == False:
         pr_reviews = pr.get_reviews()
         for review in pr_reviews:
@@ -101,4 +100,4 @@ def check_pr():
         
     
 if __name__ == "__main__":
-    check_pr()
+    pull_request_checker()
