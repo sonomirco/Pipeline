@@ -88,7 +88,7 @@ def check_pr():
     if match != None:
         is_title_check_failing = True
         pr.create_review(
-            body='☠️ Title with special characters, please fix it!',
+            body='☠️ The pull request title must be without special characters. Please fix it!',
             event='REQUEST_CHANGES')
     
     if is_labels_check_failing == False and is_title_check_failing == False:
@@ -97,7 +97,7 @@ def check_pr():
             if review.user.login == 'github-actions[bot]':
                 if review.state == 'CHANGES_REQUESTED':
                     print(f"Deleting the review id -> {review.id} with user -> {review.user.login} - with state -> {review.state}")
-                    review.delete()
+                    review.dismiss('😎 All the PR checks passed, and we dismissed the associated reviews!')
         
     
 if __name__ == "__main__":
