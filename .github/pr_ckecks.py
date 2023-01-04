@@ -84,7 +84,7 @@ def check_pr():
     pr_title = pr.title
     print(f'Pr title: {pr_title}')
     match = re.search('[^0-9A-Za-z ]', pr_title)
-    print(match)
+    print(f"Title match -> {match}")
     if match != None:
         is_title_check_failing = True
         pr.create_review(
@@ -94,11 +94,10 @@ def check_pr():
     if is_labels_check_failing == False and is_title_check_failing == False:
         pr_reviews = pr.get_reviews()
         for review in pr_reviews:
-            print(f"review user -> {review.user.login} - review state -> {review.state}")
             if review.user.login == 'github-actions[bot]':
-                print('I am a bot')
                 if review.state == 'CHANGES_REQUESTED':
-                    review.remove()
+                    print(f"Deleting the review id -> {review.id} with user -> {review.user.login} - with state -> {review.state}")
+                    review.delete()
         
     
 if __name__ == "__main__":
