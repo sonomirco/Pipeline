@@ -16,3 +16,8 @@ def read_args() -> argparse.Namespace:
 def bump_versions():
     args = read_args()
     print(f"inputs -> {args.token} - type -> {type(args.token)}")
+    
+    repo_name = os.getenv('GITHUB_REPOSITORY')
+    github_event_name = os.getenv('GITHUB_EVENT_NAME')
+    
+    print(f"repo name -> {repo_name} - event -> {github_event_name}")
