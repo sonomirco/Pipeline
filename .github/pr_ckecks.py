@@ -84,8 +84,11 @@ def check_pr():
     pr_title = pr.title
     print(f'Pr title: {pr_title}')
     match = re.search('[^0-9A-Za-z ]', pr_title)
-    if match == '':
-        print('I am empty')
+    if match != '':
+        is_title_check_failing = True
+        pr.create_review(
+            body='☠️ Title with special characters, please fix it!',
+            event='REQUEST_CHANGES')
     
     if is_labels_check_failing == False and is_title_check_failing == False:
         pr_reviews = pr.get_reviews()
@@ -94,7 +97,7 @@ def check_pr():
             if review.user.login == 'github-actions[bot]':
                 print('I am a bot')
                 if review.state == 'CHANGES_REQUESTED':
-                    review.dismiss("All the checks are passed we dismissed the review!")
+                    review.remove()
         
     
 if __name__ == "__main__":
