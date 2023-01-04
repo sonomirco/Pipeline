@@ -87,7 +87,7 @@ def check_pr():
     if match == '':
         print('I am empty')
     
-    if is_labels_check_failing == False && is_title_check_failing == False:
+    if is_labels_check_failing == False and is_title_check_failing == False:
         pr_reviews = pr.get_reviews()
         for review in pr_reviews:
             print(f"review user -> {review.user.login} - review state -> {review.state}")
