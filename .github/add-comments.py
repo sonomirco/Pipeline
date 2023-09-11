@@ -49,12 +49,28 @@ def get_pr_number(github_ref: str):
     return pr_number
 
 def markdown_string():
-    return """### Please complete the following checklist:
-- [ ] I've downloaded the code
+    return """## Please complete the following checklist:
+Thank you, name, for taking the time to review our project. In order to complete the review process, we kindly request your signoff by filling out this checklist. Thanks again! 🙏
+
+### If you did a Code review
+- [ ] I've downloaded the code and tested 
 - [ ] I don't see bugs in the code
-- [ ] The code is justifiably easy to read and understand
-- [ ] The code meets any acceptance criteria agreed to for the work
-- [ ] The code doesn't implement additional and unnecessary functionality"""
+- [ ] The code is justifiably easy to read and understand  
+- [ ] The code meets any acceptance criteria agreed to for the work  
+- [ ] The code doesn't implement additional and unnecessary functionality  
+- [ ] There are no linter errors  
+- [ ] The code follows team unit testing standards  
+- [ ] The code style and structure follows the project standards as
+---
+### If you did a Node review
+- [ ] I've downloaded the node and tested  
+- [ ] I don't see bugs in the functionality of the nodes
+- [ ] The nodes have all the inputs and outputs required
+- [ ] The nodes are well documented
+---
+### Document review
+- [ ] The documentation clearly describes the implementation
+---"""
   
 def pull_request_checklist():
     args = read_args()
