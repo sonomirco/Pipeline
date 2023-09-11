@@ -1,6 +1,7 @@
 name: Validate PR Comment
 
 on:
+  push:
   issue_comment:
     types: [created, edited]
 
