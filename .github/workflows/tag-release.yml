@@ -2,7 +2,9 @@ name: Tag release
 
 on:
   release:
-    types: [created, edited]
+    types:
+     - created
+     - edited
   workflow_dispatch:
     inputs:
       tag:
@@ -28,7 +30,11 @@ jobs:
               echo "tag=${{ inputs.tag }}" >> $GITHUB_ENV
               echo "release=false" >> $GITHUB_ENV
           fi
-              
+          
+  read_value:
+     needs: update_version
+     runs-on: ubuntu-latest
+     steps:
       - name: release
         if: env.release == 'true'
         run: echo "You used a release and the tag is ${{ env.tag }}"
