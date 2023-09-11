@@ -5,15 +5,13 @@ on:
     types:
      - created
      - edited
+    branch:
+     - main
   workflow_dispatch:
     inputs:
       tag:
         required: true
         type: string
-
-env:
-  tag: 0.0.0
-  release: success
 
 jobs:
   update_version:
@@ -37,6 +35,9 @@ jobs:
               echo "version=${{ inputs.tag }}" >> $GITHUB_OUTPUT
               echo "check=nosuccess" >> $GITHUB_OUTPUT
           fi
+
+      - name: check
+        run: echo "The tag is ${{ steps.update_version.outputs.tag }}"
           
   read_value:
      needs: update_version
