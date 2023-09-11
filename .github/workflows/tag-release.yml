@@ -11,6 +11,9 @@ on:
         required: true
         type: string
 
+env:
+  tag: ''
+  release: ''
 
 jobs:
   update_version:
