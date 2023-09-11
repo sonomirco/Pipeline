@@ -2,6 +2,9 @@ name: Validate PR Comment
 
 on:
   issue_comment:
+    branches:
+      - develop
+      - main
 
 jobs:
   validate:
