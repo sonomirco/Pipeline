@@ -1,0 +1,38 @@
+name: Tag release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        type: string
+
+
+jobs:
+  update_version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 1
+          
+      - name: Set env Tag
+        run: |
+          if [[ ${{ github.event_name }} == 'release' ]]; then
+              echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+              echo "release=true" >> $GITHUB_ENV
+          else
+              echo "tag=${{ inputs.tag }}" >> $GITHUB_ENV
+              echo "release=false" >> $GITHUB_ENV
+          fi
+              
+      - name: release
+        if: env.release == 'true'
+        run: echo "You used a release and the tag is ${{ env.tag }}"
+        
+      - name: manual
+        if: env.release == 'false'
+        run: echo "You used a manual approach and the tag is ${{ env.tag }}"
