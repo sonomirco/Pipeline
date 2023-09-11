@@ -12,8 +12,8 @@ on:
         type: string
 
 env:
-  tag: '0.0.0'
-  release: 'success'
+  tag: 0.0.0
+  release: success
 
 jobs:
   update_version:
@@ -27,11 +27,11 @@ jobs:
       - name: Set env Tag
         run: |
           if [[ ${{ github.event_name }} == 'release' ]]; then
-              echo "env.tag=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
-              echo "env.release=success" >> $GITHUB_ENV
+              echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+              echo "release=success" >> $GITHUB_ENV
           else
-              echo "env.tag=${{ inputs.tag }}" >> $GITHUB_ENV
-              echo "env.release=nosuccess" >> $GITHUB_ENV
+              echo "tag=${{ inputs.tag }}" >> $GITHUB_ENV
+              echo "release=nosuccess" >> $GITHUB_ENV
           fi
           
   read_value:
@@ -39,9 +39,9 @@ jobs:
      runs-on: ubuntu-latest
      steps:
       - name: release
-        if: env.release == 'success'
+        if: ${{ env.release == 'success' }}
         run: echo "You used a release and the tag is ${{ env.tag }}"
         
       - name: manual
-        if: env.release == 'nosuccess'
+        if: ${{ env.release == 'nosuccess' }}
         run: echo "You used a manual approach and the tag is ${{ env.tag }}"
