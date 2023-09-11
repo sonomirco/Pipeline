@@ -35,7 +35,7 @@ jobs:
           fi
 
       - name: check
-        run: echo "The tag is ${{ steps.update_version.outputs.tag }}"
+        run: echo "The tag is ${{ steps.setoutput.outputs.version }}"
           
   read_value:
      needs: update_version
