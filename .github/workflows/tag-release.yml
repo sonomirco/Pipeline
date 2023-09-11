@@ -39,9 +39,9 @@ jobs:
      runs-on: ubuntu-latest
      steps:
       - name: release
-        if: env.release == 'true'
+        if: ${{ env.release }} == 'true'
         run: echo "You used a release and the tag is ${{ env.tag }}"
         
       - name: manual
-        if: env.release == 'false'
+        if: ${{ env.release }} == 'false'
         run: echo "You used a manual approach and the tag is ${{ env.tag }}"
