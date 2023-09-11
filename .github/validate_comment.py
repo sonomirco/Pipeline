@@ -2,7 +2,7 @@ import sys
 import re
 import argparse
 
-# Constants
+# Constants--
 CODE_REVIEW_SECTION = "If you did a Code review"
 NODE_REVIEW_SECTION = "If you did a Node review"
 DOCUMENT_REVIEW_SECTION = "Document review"
