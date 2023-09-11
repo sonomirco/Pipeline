@@ -10,6 +10,19 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.issue.pull_request.head.sha }}
 
+    - name: 🐍 Setting Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip'
     - run: |
-          echo ${{ github.event.comment.body }}
+          python -m pip install --upgrade pip
+          pip install -r .github/requirements.txt
+          python .github/validate_comment.py --body ${{ github.event.comment.body }}
+          if [ $? -ne 0 ]; then
+            echo "Validation failed!"
+            exit 1
+          fi
