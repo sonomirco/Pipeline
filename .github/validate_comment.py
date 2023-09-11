@@ -61,3 +61,6 @@ def validate_checklist():
         sys.exit(1)
 
 # By default, a script that completes without any errors will exit with a status of 0, which indicates success. 
+
+if __name__ == "__main__":
+    validate_checklist()
