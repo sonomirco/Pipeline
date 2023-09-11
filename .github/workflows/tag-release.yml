@@ -1,0 +1,50 @@
+name: Tag release
+
+on:
+  release:
+    types: [created, edited, published]
+    branch:
+     - main
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        type: string
+
+jobs:
+  update_version:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.setoutput.outputs.version }}
+      release: ${{ steps.setoutput.outputs.check }}
+    steps:
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 1
+          
+      - name: Set env Tag
+        id: setoutput
+        run: |
+          if [[ ${{ github.event_name }} == 'release' ]]; then
+              echo "version=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+              echo "check=success" >> $GITHUB_OUTPUT
+          else
+              echo "version=${{ inputs.tag }}" >> $GITHUB_OUTPUT
+              echo "check=nosuccess" >> $GITHUB_OUTPUT
+          fi
+
+      - name: check
+        run: echo "The tag is ${{ steps.setoutput.outputs.version }}"
+          
+  read_value:
+     needs: update_version
+     runs-on: ubuntu-latest
+     steps:
+      - name: release
+        if: ${{ needs.update_version.outputs.release == 'success' }}
+        run: echo "You used a release and the tag is ${{ needs.update_version.outputs.tag }}"
+        
+      - name: manual
+        if: ${{ needs.update_version.outputs.release == 'nosuccess' }}
+        run: echo "You used a manual approach and the tag is ${{ needs.update_version.outputs.tag }}"
