@@ -2,9 +2,7 @@ name: Tag release
 
 on:
   release:
-    types:
-     - created
-     - edited
+    types: [created, edited, published]
     branch:
      - main
   workflow_dispatch:
