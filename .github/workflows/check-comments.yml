@@ -2,8 +2,6 @@ name: Validate PR Comment
 
 on:
   issue_comment:
-    branches: 
-     - 'dev/mibi/check-comment-pr'
 
 jobs:
   validate:
