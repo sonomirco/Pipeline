@@ -31,10 +31,10 @@ jobs:
         id: setoutput
         run: |
           if [[ ${{ github.event_name }} == 'release' ]]; then
-              echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+              echo "version=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
               echo "check=success" >> $GITHUB_OUTPUT
           else
-              echo "tag=${{ inputs.tag }}" >> $GITHUB_OUTPUT
+              echo "version=${{ inputs.tag }}" >> $GITHUB_OUTPUT
               echo "check=nosuccess" >> $GITHUB_OUTPUT
           fi
           
