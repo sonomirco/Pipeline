@@ -16,6 +16,8 @@ jobs:
       with:
         ref: ${{ github.event.issue.pull_request.head.sha }}
 
+    - run: echo ${{ github.event.issue.pull_request.body }}
+
     - name: 🐍 Setting Python
       uses: actions/setup-python@v4
       with:
