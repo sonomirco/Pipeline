@@ -1,0 +1,37 @@
+name: Trigger by the commit
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  deploy:
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/deploy')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.issue.pull_request.head.sha }}
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.updateComment({
+              comment_id: context.comment.id,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '${{ github.event.issue.body }} 👋 Thanks for reporting!'
+            })
+
+      - name: Deploy
+        run: |
+          echo "Deploying..."
+
+      - name: 🚧 Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+          
+      - name: 🔧 Restore nuget with dotnet
+        run: dotnet restore ${{ env.PROJECT_PATH }}
