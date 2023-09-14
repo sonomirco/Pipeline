@@ -17,3 +17,11 @@ jobs:
       - name: Deploy
         run: |
           echo "Deploying..."
+
+      - name: 🚧 Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+          
+      - name: 🔧 Restore nuget with dotnet
+        run: dotnet restore ${{ env.PROJECT_PATH }}
