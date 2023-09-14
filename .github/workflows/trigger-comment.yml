@@ -1,7 +1,6 @@
 name: Trigger by the commit
 
 on:
-  push:
   issue_comment:
     types: [created]
 
