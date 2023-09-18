@@ -19,11 +19,10 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const commentId = context.payload.comment.id;
-            const issueNumber = context.payload.issue.number;
             
             github.rest.issues.updateComment({
               comment_id: commentId,
-              owner: repo.owner,
+              owner: context.owner,
               repo: context.repo,
               body: context.payload.comment.body + '\n\n 👋 Thanks for reporting!'
             })
