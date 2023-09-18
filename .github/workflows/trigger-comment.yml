@@ -22,8 +22,8 @@ jobs:
             
             github.rest.issues.updateComment({
               comment_id: commentId,
-              owner: context.owner,
-              repo: context.repo,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               body: context.payload.comment.body + '\n\n 👋 Thanks for reporting!'
             })
 

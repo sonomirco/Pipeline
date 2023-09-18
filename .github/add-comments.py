@@ -50,7 +50,7 @@ def get_pr_number(github_ref: str):
 
 def markdown_string():
     return """## Please complete the following checklist:
-Thank you, name, for taking the time to review our project. In order to complete the review process, we kindly request your signoff by filling out this checklist. Thanks again! 🙏
+Thank you, Mirco, for taking the time to review our project. In order to complete the review process, we kindly request your signoff by filling out this checklist. Thanks again! 🙏
 
 ### If you did a Code review
 - [ ] I've downloaded the code and tested 
