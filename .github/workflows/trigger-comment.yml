@@ -3,9 +3,6 @@ name: Trigger by the commit
 on:
   issue_comment:
     types: [created]
-    branches:
-    - main
-    - develop
 
 jobs:
   deploy:
