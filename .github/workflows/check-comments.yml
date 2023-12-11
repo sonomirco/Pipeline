@@ -8,14 +8,14 @@ jobs:
     if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
+    - run: |
+        echo ${{ github.event.issue.pull_request }}
+        echo ${{ github.event.issue.pull_request.head }}
+        echo ${{ github.event.issue.pull_request.head.sha }}
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         ref: ${{ github.event.issue.pull_request.head.sha }}
-
-    - run: |
-          echo ${{ github.event.issue.pull_request.body }}
-          echo ${{ github.event.issue.pull_request.head.sha }}
 
     - name: 🐍 Setting Python
       uses: actions/setup-python@v4

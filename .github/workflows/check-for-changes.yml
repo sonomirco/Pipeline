@@ -1,13 +1,13 @@
-name: Check differences of files
+name: Check differences
 
 on:
   issue_comment:
 
 jobs:
-  changes:
+  validate:
     runs-on: ubuntu-latest
     steps:
-    - run: echo ${{ github.event.issue.pull_request.head.sha }}
+      - run: echo ${{ github.event.issue.pull_request.head.sha }}
 
       - name: 🛎 Checkout repo
         uses: actions/checkout@v3
