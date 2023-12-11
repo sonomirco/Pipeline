@@ -7,6 +7,7 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     steps:
+    - run: echo ${{ github.event.issue.pull_request.head.sha }}
 
       - name: 🛎 Checkout repo
         uses: actions/checkout@v3
@@ -27,7 +28,7 @@ jobs:
       deplyment_review: ${{ github.event.issue.pull_request.head.sha }}
     secrets: inherit
 
-  build:
+  test:
     strategy:
       fail-fast: true
     uses: ./.github/workflows/deployment.yaml
