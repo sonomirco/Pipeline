@@ -19,17 +19,3 @@ jobs:
         id: filter
         with:
           ref: ${{ github.event.issue.pull_request.head.sha }}
-
-  build:
-    strategy:
-      fail-fast: true
-    uses: ./.github/workflows/deployment.yaml
-    with:
-      deplyment_review: ${{ github.event.issue.pull_request.head.sha }}
-    secrets: inherit
-
-  test:
-    strategy:
-      fail-fast: true
-    uses: ./.github/workflows/deployment.yaml
-    secrets: inherit
