@@ -1,13 +1,13 @@
 name: Check differences of files
 
 on:
-  push:
   issue_comment:
 
 jobs:
   changes:
     runs-on: ubuntu-latest
     steps:
+    - run: echo ${{ github.event.issue.pull_request.head.sha }}
 
       - name: 🛎 Checkout repo
         uses: actions/checkout@v3
@@ -19,17 +19,3 @@ jobs:
         id: filter
         with:
           ref: ${{ github.event.issue.pull_request.head.sha }}
-
-  build:
-    strategy:
-      fail-fast: true
-    uses: ./.github/workflows/deployment.yaml
-    with:
-      deplyment_review: ${{ github.event.issue.pull_request.head.sha }}
-    secrets: inherit
-
-  build:
-    strategy:
-      fail-fast: true
-    uses: ./.github/workflows/deployment.yaml
-    secrets: inherit
