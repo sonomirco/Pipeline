@@ -1,4 +1,4 @@
-name: Check differences of files
+name: Check differences
 
 on:
   issue_comment:
