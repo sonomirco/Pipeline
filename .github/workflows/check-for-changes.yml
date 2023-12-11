@@ -17,10 +17,11 @@ jobs:
 
       - name: 📌 Filter changed projects
         uses: dorny/paths-filter@v2
-        id: filter
         with:
           base: ${{ github.event.issue.pull_request.headRef }}
-          filters: ''
+          filters: |
+            changes:
+            - './**'
 
   build:
     strategy:
