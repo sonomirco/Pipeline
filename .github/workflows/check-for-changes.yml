@@ -16,20 +16,21 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
         
       - name: "Get PR's branch name"
-        id: get_branch
+        id: ref
         run: |
           PR=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" ${{ github.event.issue.pull_request.url }})
-          echo $PR | jq -r '.head.ref'
+          echo "sha=$(PR | jq -r '.head.sha)" >> $GITHUB_OUTPUT
+          echo $(PR | jq -r '.head.sha)'
 
       - name: 🛎 Checkout repo
         uses: actions/checkout@v3
         with:
-          ref: ${{  github.event.pull_request.url.head.sha }}
+          ref: ${{ steps.ref.outputs.sha }}
 
       - name: 📌 Filter changed projects
         uses: dorny/paths-filter@v2
         with:
-          base: ${{  github.event.pull_request.url.head.sha }}
+          base: ${{ steps.ref.outputs.sha }}
           filters: |
             changes:
             - './**'
@@ -39,7 +40,7 @@ jobs:
       fail-fast: true
     uses: ./.github/workflows/deployment.yaml
     with:
-      deplyment_review: ${{  github.event.pull_request.head.sha }}
+      deplyment_review: ${{ steps.ref.outputs.sha }}
     secrets: inherit
 
   test:
