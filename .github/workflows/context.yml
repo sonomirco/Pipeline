@@ -1,7 +1,5 @@
 name: Check context
-#comment
 on:
-  workflow_dispatch:
   issue_comment:
   pull_request:
 
