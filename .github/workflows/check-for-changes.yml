@@ -8,17 +8,20 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.issue.pull_request.headRef }}
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github.event.issue.pull_request) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - name: 🛎 Checkout repo
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.issue.pull_request.headRef }}
+          ref: ${{  github.event.pull_request.head.sha }}
 
       - name: 📌 Filter changed projects
         uses: dorny/paths-filter@v2
         with:
-          base: ${{ github.event.issue.pull_request.headRef }}
+          base: ${{  github.event.pull_request.head.sha }}
           filters: |
             changes:
             - './**'
@@ -28,7 +31,7 @@ jobs:
       fail-fast: true
     uses: ./.github/workflows/deployment.yaml
     with:
-      deplyment_review: ${{ github.event.issue.pull_request.headRef }}
+      deplyment_review: ${{  github.event.pull_request.head.sha }}
     secrets: inherit
 
   test:
