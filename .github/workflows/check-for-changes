@@ -1,7 +1,8 @@
-name: Check differences
+name: Check differences of files
+
 on:
+  push:
   issue_comment:
-    types: [created]
 
 jobs:
   changes:
