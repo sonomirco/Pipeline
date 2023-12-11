@@ -9,11 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         ref: ${{ github.event.issue.pull_request.head.sha }}
 
-    - run: echo ${{ github.event.issue.pull_request.body }}
+    - run: |
+          echo ${{ github.event.issue.pull_request.body }}
+          echo ${{ github.event.issue.pull_request.head.sha }}
 
     - name: 🐍 Setting Python
       uses: actions/setup-python@v4
