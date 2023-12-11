@@ -1,6 +1,7 @@
 name: Check context
 #last
 on:
+  push:
   issue_comment:
   pull_request:
   
