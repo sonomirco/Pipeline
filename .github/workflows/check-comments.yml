@@ -1,15 +1,18 @@
 name: Validate PR Comment
-# just a comment.
 on:
+  push:
   issue_comment:
 
 jobs:
   validate:
-    if: ${{ github.event.issue.pull_request }}
+    #if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
+    - name: Dump GitHub context
+      env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
     - run: |
-        echo ${{ github.event.issue.pull_request.headRef }}
+        echo "$GITHUB_CONTEXT"
         echo ${{ github.event.issue.pull_request.headRefName  }}
         echo ${{ github.event.issue.pull_request.head.number }}
     - name: Checkout code
