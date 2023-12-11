@@ -26,3 +26,9 @@ jobs:
     with:
       deplyment_review: ${{ github.event.issue.pull_request.head.sha }}
     secrets: inherit
+
+  build:
+    strategy:
+      fail-fast: true
+    uses: ./.github/workflows/deployment.yaml
+    secrets: inherit
