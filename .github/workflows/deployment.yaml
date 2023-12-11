@@ -1,0 +1,22 @@
+name: Reusable workflow deployment
+
+on:
+  workflow_call:
+    inputs:
+      deplyment_review:
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛎 Checkout information
+        run: |
+          echo ${{ inputs.deplyment_review }}
+          
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+          ref: ${{ inputs.deplyment_review }}
