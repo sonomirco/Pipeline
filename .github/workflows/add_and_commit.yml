@@ -1,7 +1,7 @@
 name: Add a commit
-
+# just a comment.
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   job_1:

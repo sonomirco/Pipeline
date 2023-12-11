@@ -1,0 +1,34 @@
+name: Check differences
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.issue.pull_request.head.sha }}
+
+      - name: 📌 Filter changed projects
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          ref: ${{ github.event.issue.pull_request.head.sha }}
+
+  build:
+    strategy:
+      fail-fast: true
+    uses: ./.github/workflows/deployment.yaml
+    with:
+      deplyment_review: ${{ github.event.issue.pull_request.head.sha }}
+    secrets: inherit
+
+  build:
+    strategy:
+      fail-fast: true
+    uses: ./.github/workflows/deployment.yaml
+    secrets: inherit

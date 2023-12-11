@@ -2,7 +2,7 @@ import sys
 import re
 import argparse
 
-# Constants
+# Constants--
 CODE_REVIEW_SECTION = "If you did a Code review"
 NODE_REVIEW_SECTION = "If you did a Node review"
 DOCUMENT_REVIEW_SECTION = "Document review"
@@ -11,7 +11,7 @@ CHECKED_BOX = '- [x]'
 EXCLUDED_CHECKBOX = "The code follows team unit testing standards"
 
 def read_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Review the checklist has be compleated")
+    parser = argparse.ArgumentParser(description="Review the checklist has be compleated", formatter_class=argparse.RawTextHelpFormatter)
     # We will parse the list as a string.
     parser.add_argument("--body", type=str, help="The checklist body")
     args = parser.parse_args()
@@ -43,9 +43,9 @@ def validate_checklist():
         print('The action need the checklist body')
         sys.exit(1)
 
-    code_review_checks = extract_checkboxes_from_section(comment, CODE_REVIEW_SECTION)
-    node_review_checks = extract_checkboxes_from_section(comment, NODE_REVIEW_SECTION)
-    document_review_checks = extract_checkboxes_from_section(comment, DOCUMENT_REVIEW_SECTION)
+    code_review_checks = extract_checkboxes_from_section(args.body, CODE_REVIEW_SECTION)
+    node_review_checks = extract_checkboxes_from_section(args.body, NODE_REVIEW_SECTION)
+    document_review_checks = extract_checkboxes_from_section(args.body, DOCUMENT_REVIEW_SECTION)
 
     if not are_all_checked(document_review_checks):
         return False
@@ -61,3 +61,6 @@ def validate_checklist():
         sys.exit(1)
 
 # By default, a script that completes without any errors will exit with a status of 0, which indicates success. 
+
+if __name__ == "__main__":
+    validate_checklist()
