@@ -9,6 +9,8 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    outputs:
+      branch_ref: ${{ steps.ref.outputs.sha }}
     steps:
       - name: Dump GitHub context
         env:
@@ -36,11 +38,12 @@ jobs:
             - './**'
 
   build:
+    needs: validate
     strategy:
       fail-fast: true
     uses: ./.github/workflows/deployment.yaml
     with:
-      deplyment_review: ${{ steps.ref.outputs.sha }}
+      deplyment_review: ${{ needs.validate.outputs.branch_ref }}
     secrets: inherit
 
   test:
