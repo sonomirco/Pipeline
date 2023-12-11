@@ -1,6 +1,5 @@
 name: Check context
 on:
-  push:
   workflow_dispatch:
   issue_comment:
   pull_request:
