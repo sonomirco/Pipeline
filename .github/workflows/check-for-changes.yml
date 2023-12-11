@@ -12,20 +12,16 @@ jobs:
     outputs:
       branch_ref: ${{ steps.ref.outputs.sha }}
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJSON(github.event.issue.pull_request.url) }}
-        run: echo "$GITHUB_CONTEXT"
-        
       - name: "Get PR's branch name"
         id: ref
         run: |
           PR=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" ${{ github.event.issue.pull_request.url }})
-          echo "sha=$(PR | jq -r '.head.sha)" >> $GITHUB_OUTPUT
-          echo $(PR | jq -r '.head.sha)'
+          echo "sha=$(PR | jq -r '.head.sha')" >> $GITHUB_OUTPUT
+          echo $(PR | jq -r '.head.sha')
+          echo $(PR | jq -r '.head.ref')
 
       - name: 🛎 Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ steps.ref.outputs.sha }}
 
@@ -47,6 +43,7 @@ jobs:
     secrets: inherit
 
   test:
+    needs: validate
     strategy:
       fail-fast: true
     uses: ./.github/workflows/deployment.yaml
