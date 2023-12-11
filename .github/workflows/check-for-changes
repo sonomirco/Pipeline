@@ -1,7 +1,6 @@
 name: Check differences of files
 
 on:
-  push:
   issue_comment:
 
 jobs:
