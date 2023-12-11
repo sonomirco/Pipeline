@@ -6,9 +6,10 @@ on:
   pull_request:
 
 jobs:
-  validate:
+  one:
     runs-on: ubuntu-latest
     steps:
-    - name: Dump GitHub context
-      env:
+      - name: Dump GitHub context
+        env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
