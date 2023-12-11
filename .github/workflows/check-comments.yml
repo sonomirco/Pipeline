@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo ${{ github.event.issue.pull_request }}
-        echo ${{ github.event.issue.pull_request.head }}
-        echo ${{ github.event.issue.pull_request.head.sha }}
+        echo ${{ github.event.issue.pull_request.headRef }}
+        echo ${{ github.event.issue.pull_request.headRefName  }}
+        echo ${{ github.event.issue.pull_request.head.number }}
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        ref: ${{ github.event.issue.pull_request.head.sha }}
+        ref: ${{ github.event.issue.pull_request.headRef }}
 
     - name: 🐍 Setting Python
       uses: actions/setup-python@v4
