@@ -4,7 +4,7 @@ on:
   push:
   issue_comment:
   pull_request:
-  
+
 jobs:
   one:
     runs-on: ubuntu-latest
@@ -15,3 +15,28 @@ jobs:
         run: |
           echo "$GITHUB_CONTEXT"
           echo ${{ github.issue.number }}
+
+      - name: 🌿 Get branch
+        id: branch
+        run: |
+          PR=$(curl -H "Authorization: token ${{ GITHUB_TOKEN }}" ${{ github.event.issue.pull_request.url }})
+          echo "sha=$(echo $PR | jq -r '.head.sha')" >> $GITHUB_OUTPUT
+          echo $PR | jq -r '.head.sha'
+
+      - name: 🛎 Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.branch.outputs.sha }}
+          token: ${{ GITHUB_TOKEN }}
+
+      - name: 🐍 Setting Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r .github/requirements.txt
+
+      - name: 🐍 Define the dev name
+        run: python .github/read_pr.yml --token ${{ secrets.GITHUB_TOKEN }} --pr_number ${{ github.issue.number }}
