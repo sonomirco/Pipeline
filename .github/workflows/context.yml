@@ -14,7 +14,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
-          echo ${{ github.issue.number }}
+          echo ${{ github.event.issue.number }}
 
       - name: 🌿 Get branch
         id: branch
