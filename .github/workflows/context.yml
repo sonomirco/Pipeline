@@ -19,7 +19,7 @@ jobs:
       - name: 🌿 Get branch
         id: branch
         run: |
-          PR=$(curl -H "Authorization: token ${{ GITHUB_TOKEN }}" ${{ github.event.issue.pull_request.url }})
+          PR=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" ${{ github.event.issue.pull_request.url }})
           echo "sha=$(echo $PR | jq -r '.head.sha')" >> $GITHUB_OUTPUT
           echo $PR | jq -r '.head.sha'
 
