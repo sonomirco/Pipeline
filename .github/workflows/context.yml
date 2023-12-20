@@ -14,5 +14,4 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
-          echo ${{ github.event_name }}
-          echo ${{ github.event.user }}
+          echo ${{ github.issue.number }}
