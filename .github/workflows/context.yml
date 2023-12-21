@@ -38,4 +38,4 @@ jobs:
           pip install -r .github/requirements.txt
 
       - name: 🐍 Define the dev name
-        run: python .github/read_pr.py --token ${{ secrets.GITHUB_TOKEN }} --pr_number ${{ github.issue.number }}
+        run: python .github/read_pr.py --token ${{ secrets.GITHUB_TOKEN }} --pr_number ${{ github.event.issue.number }}
