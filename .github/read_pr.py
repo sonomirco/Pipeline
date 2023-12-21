@@ -54,7 +54,6 @@ def pull_request_checker():
     
     # Get the pull request labels and check if the PR has labels.
     pr_labels = pr.get_labels()
-    pr.
     print(f'Pr labels: {pr_labels.totalCount}')
 
 if __name__ == "__main__":
