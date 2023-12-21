@@ -39,18 +39,14 @@ def parse_arguments() -> argparse.Namespace:
     args = parser.parse_args()
     return args
   
-def pull_request_checker():
-    if args.token == None or args.token == '':
-        print('The action need a GitHub token')
-        sys.exit(1)
-    
+def pr_reader(token, pr_number):
     # Collects GitHub variables.
     repo_name = get_env_var('GITHUB_REPOSITORY')
 
     # Creates a repository object, using the GitHub token.
-    repo = Github(args.token).get_repo(repo_name)
-    pr_number = int(args.pr_number)
-    pr = repo.get_pull(pr_number)
+    repo = Github(token).get_repo(repo_name)
+    issue_number = int(pr_number)
+    pr = repo.get_pull(issue_number)
     
     # Get the pull request labels and check if the PR has labels.
     pr_labels = pr.get_labels()
@@ -59,7 +55,7 @@ def pull_request_checker():
 if __name__ == "__main__":
     args = parse_arguments()
     try:
-        result = pull_request_checklist(args.token, args.pr_number)
+        result = pr_reader(args.token, args.pr_number)
         print(result)
     except ValueError as e:
         print(e)
