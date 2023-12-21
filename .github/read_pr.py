@@ -5,8 +5,6 @@ import argparse
 import distutils.util
 from github import Github
 
-#comment
-
 def get_env_var(env_var_name, echo_value=True):
     """Try to get the value from a environmental variable.
     If the values is 'None', then a ValueError exception will
@@ -56,7 +54,6 @@ def pull_request_checker():
     
     # Get the pull request labels and check if the PR has labels.
     pr_labels = pr.get_labels()
-    pr.
     print(f'Pr labels: {pr_labels.totalCount}')
 
 if __name__ == "__main__":
