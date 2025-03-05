@@ -1,0 +1,8 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+title: RepoConfig
+description: Configuration for Gemini Code Assist on a repository. All fields are optional and have default values.
+type: object
+properties:
+  have_fun:
+    type: boolean
+    description: Enables fun features such as a poem in the initial pull request summary. Default: true.
